@@ -1,0 +1,65 @@
+<?php
+//### CREATE 2010/06/20 Pyon ###
+	$this->layout = 'home';
+	$this->pageTitle = '';
+	$paginator->options(array('url' => $this->passedArgs));
+	$roy = "roy";
+?>
+	<h2>TimeLine</h2>
+	<p>
+        <table width="100%" cellpadding="0" cellspacing="0">
+                <tr width="100%">
+			<td width=10% rowspan='2'>
+				<?php echo $html->image('/img/profile/'.$roy.'.png', array('width' => '30px'))?>
+				<br />
+				<?php echo "name" ?>
+			</td>
+                        <td width=90% height='50px' bgcolor='red'>
+				aaa
+                        </td>
+		</tr>
+                <tr width="100%">
+                        <td width=90% bgcolor='blue'>
+				bbb
+                        </td>
+                </tr>
+	</table>
+	<br />
+	<table cellpadding="0" cellspacing="0">
+		<tr width="100%">
+			<th width="10%"><?php echo $paginator->sort('写真', 'pic'); ?></th>
+			<th width="15%"><?php echo $paginator->sort('名前', 'name'); ?></th>
+			<th width="65%"><?php echo $paginator->sort('本文', 'body'); ?></th>
+			<th width="10%" class="actions">&nbsp;</th>
+		</tr>
+<?php if (count($datas) == 0): ?>
+		<tr>
+			<td colspan="4" class="notfound">
+				Not found</td>
+		</tr>
+<?php else: ?>
+<?php $i = 0; ?>
+<?php foreach ($datas as $data): ?>
+		<tr<?php echo (($i++ % 2 == 0) ? ' class="altrow"' : ''); ?>>
+			<td><?php echo $html->image($data['User']['profile_img'], array('alt' => 'CakePHP')) ?></td>
+			<td><?php echo $html->link($data['User']['name'], array('controller' => 'articles', 'action' => 'index', 'id' => $data['Article']['user_id'])); ?></td>
+			<td><?php 
+				echo $html->link($data['Article']['body'], array('controller' => 'comments', 'action' => 'index', 'id' => $data['Article']['id'])); 
+				echo ((strcmp($data['Article']['created'], '') != 0) ? $data['Article']['created'] : '&nbsp;');
+			?></td>
+
+			<td><?php echo ((isset($auth)) && ($data['Article']['user_id'] == $auth['User']['id'])) ? $html->link('編集', array('controller' => 'articles', 'action' => 'edit', 'id' => $data['Article']['id'], '?' => array('redirect' => 'home'))).'<br>'.$html->link('削除', array('controller' => 'articles', 'action' => 'delete', 'id' => $data['Article']['id'], '?' => array('redirect' => 'home'))) : '&nbsp;'; ?></td>
+		</tr>
+<?php endforeach; ?>
+<?php endif; ?>
+	</table>
+	<?php echo $paginator->prev('<< 前へ', array(), null, array('class' => 'disabled')).' | '.$paginator->numbers().' | '.$paginator->next('次へ >>', array(), null, array('class' => 'disabled'))."\n"; ?>
+<?php if (isset($auth)): ?>
+	<ul>
+		<li><?php echo $html->link('新規投稿', array('controller' => 'articles', 'action' => 'add', '?' => array('redirect' => 'home'))); ?></li>
+		<li><?php echo $html->link('投稿一覧', array('controller' => 'articles', 'action' => 'index', 'id' => $auth['User']['id'])); ?></li>
+		<li><?php echo $html->link('ユーザ一覧', array('controller' => 'users', 'action' => 'index')); ?></li>
+		<li><?php echo $html->link('登録内容変更', array('controller' => 'users', 'action' => 'edit')); ?></li>
+		<li><?php echo $html->link('退会', array('controller' => 'users', 'action' => 'delete')); ?></li>
+	</ul>
+<?php endif; ?>
