@@ -2,7 +2,7 @@
 <p><?php echo $form->text('text') ?>
 <?php echo $form->end('GO') ?></p>
 </form>
-
+aaa
 <table>
 <?php foreach($posts as $post) { ?>
 <tr>

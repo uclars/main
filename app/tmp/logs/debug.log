@@ -821,3 +821,4 @@
 2011-03-23 16:29:41 Notice: Notice (8): Undefined variable: cakeDebug in [/var/www/html/main/app/views/layouts/default.ctp, line 39]
 2011-03-24 09:25:54 Notice: Notice (8): Undefined variable: cakeDebug in [/var/www/html/main/app/views/layouts/default.ctp, line 39]
 2011-03-24 09:29:02 Notice: Notice (8): Undefined variable: cakeDebug in [/var/www/html/main/app/views/layouts/default.ctp, line 39]
+2011-03-24 15:44:59 Notice: Notice (8): Undefined variable: cakeDebug in [/var/www/html/main/app/views/layouts/default.ctp, line 39]
