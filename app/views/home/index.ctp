@@ -6,7 +6,8 @@
 <?php foreach($posts as $post) { ?>
 <tr>
 <td><?php echo h($post['Post']['id']); ?></td>
-<td><?php echo h($post['Post']['text']); ?></td>
+<td><?php echo h($post['Post']['user_id']); ?></td>
+<td><?php echo h($post['Post']['body']); ?></td>
 <td><?php echo h($post['Post']['created']); ?></td>
 </tr>
 <?php } ?>
