@@ -16,3 +16,4 @@
 2011-03-22 20:23:44 Warning: Warning (512): Method HtmlHelper::submit does not exist in [/var/www/html/main/cake/libs/view/helper.php, line 154]
 2011-03-22 20:23:46 Warning: Warning (512): Method HtmlHelper::input does not exist in [/var/www/html/main/cake/libs/view/helper.php, line 154]
 2011-03-22 20:23:46 Warning: Warning (512): Method HtmlHelper::submit does not exist in [/var/www/html/main/cake/libs/view/helper.php, line 154]
+2011-03-28 11:40:07 Warning: Warning (512): Method FormHelper::body does not exist in [/var/www/html/main/cake/libs/view/helper.php, line 154]

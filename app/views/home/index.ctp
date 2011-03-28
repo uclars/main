@@ -1,5 +1,5 @@
 <form action="<?php echo h($html->url('/posts/add')) ?>" method="post" style="margin-bottom:1em">
-<p><?php echo $form->text('text') ?>
+<p><?php echo $form->body('text') ?>
 <?php echo $form->end('GO') ?></p>
 </form>
 <table>
