@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 	<?php echo $html->charset()."\n"; ?>
-	<title>ミニブログ<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
 	<?php echo $html->meta('icon')."\n"; ?>
 	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
 	<?php echo $html->css('style')."\n"; ?>
@@ -13,8 +13,8 @@
 	<div id="header">
 		<?php echo $html->image("YouXpress_logo.png", array("alt"=>"テスト")) ?>
 		<h4>
-<?php if(isset($auth)): ?>
-	Welocome! <?php echo h($auth['User']['name']); ?> <?php echo $html->link('[logout', array('controller'=>'users', 'action'=>'logout')); ?>
+<?php if(!empty($auth)): ?>
+	Welocome! <?php echo h($auth['email']); ?> <?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?>
 <?php else: ?>
 	<?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '.$html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?>
 <?php endif; ?>

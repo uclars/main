@@ -2,24 +2,26 @@
 //### CREATE 2010/06/20 Pyon ###
 class HomeController extends AppController {
 
+	var $components = array('Auth', 'Session');
 	var $name = 'Home';
 	//var $helpers = array('Html', 'Form');
 	var $helpers = array('Html');
+	var $layout = "home";
 	var $uses = array('User', 'Post');
 
 	//### アクションが実行される前に実行 ###
-//	function beforeFilter() {
+	function beforeFilter() {
 		//親クラス呼出
-//		parent::beforeFilter();
+		parent::beforeFilter();
 		//[Auth]例外設定
-//		$this->Auth->allow('*');
-//	}
+		$this->Auth->allow('*');
+	}
 
 	//### ホーム ###
 	function index() {
 		$this->set('posts', $this->Post->find('all'));
 
-
+		$this->set('auth', $this->Session->read('Auth.User'));
 
 		//投稿データセット
 /*

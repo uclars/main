@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php echo $html->charset()."\n"; ?>
-	<title>ミニブログ<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
 	<?php echo $html->meta('icon')."\n"; ?>
 	<?php echo $html->css('cake.generic')."\n"; ?>
 	<?php echo $scripts_for_layout."\n"; ?>
