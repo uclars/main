@@ -7,6 +7,7 @@ class UsersController extends AppController
 	parent::beforeFilter(); 
 	$this->Auth->allow('add', 'login');
 
+	//認証パラメータをusername -> emailに変更
 	$this->Auth->fields = array(
 		'username' => 'email',
 		'password' => 'password'

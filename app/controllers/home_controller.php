@@ -4,8 +4,7 @@ class HomeController extends AppController {
 
 	var $components = array('Auth', 'Session');
 	var $name = 'Home';
-	//var $helpers = array('Html', 'Form');
-	var $helpers = array('Html');
+	var $helpers = array('Html', 'Form');
 	var $layout = "home";
 	var $uses = array('User', 'Post');
 
@@ -19,7 +18,31 @@ class HomeController extends AppController {
 
 	//### ホーム ###
 	function index() {
+		//$post = $this->Post->find('id');
+/*
+		$this->Post->bindModel(array(
+			'hasOne' => array(
+				'User' => array(
+					'className' => 'User',
+					'foreignKey' => 'id',
+					'fields' => 'User.username, User.profile_img'
+				)
+			)
+		), false);
+*/
+
+
 		$this->set('posts', $this->Post->find('all'));
+
+/*
+echo "<PRE>";
+var_dump($post);
+echo "</PRE>";
+*/
+
+
+
+//		$this->set('owner', $this->User->findById($post['Post']['id']));
 
 		$this->set('auth', $this->Session->read('Auth.User'));
 
