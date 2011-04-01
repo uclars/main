@@ -76,15 +76,11 @@ class UsersController extends AppController
 		$cookie = array();
 		$cookie['id'] = $this->Auth->user('id');
 		$cookie['email'] = $this->Auth->user('email');
+		$cookie['username'] = $this->Auth->user('username');
 
 		$this->Session->write('Auth.User', $cookie);
 
-		$this->redirect($this->Auth->redirect());
-
-echo "sucess";
-var_dump($cookie);
-
-
+		$this->redirect($this->Auth->redirect('/'));
         }else{
             //ログイン失敗した時の処理
         }
@@ -100,10 +96,28 @@ var_dump($cookie);
    }
 
    function add() {
-       if (!empty($this->data)) {
-           $this->User->create();
-           $this->User->save($this->data['User']);
-           $this->redirect(array('action' => 'home'));
+	if($this->Auth->user()){
+		$this->set('msg', 'Already registered');
+		$this->render('/errors/custom');
+	}
+	if (!empty($this->data)) {
+		//input check
+		$data = array();
+		$data['User']['username'] = $this->data['User']['username'];
+		$data['User']['email'] = $this->data['User']['email'];
+		$data['User']['password_new'] = $this->data['User']['password_new'];
+		$data['User']['password_chk'] = $this->data['User']['password_chk'];
+		$this->User->create($data);
+		if(!($this->User->validates())){
+			$this->Session->setFlash('Something wrong!');
+		}
+		else{
+			unset($data['User']['password_new']);
+			unset($data['User']['password_chk']);
+			$data['User']['password'] = $this->Auth->password($this->data['User']['password_new']);
+			$this->User->save($data);
+			//$this->redirect('/');
+		}
        }
    }
 

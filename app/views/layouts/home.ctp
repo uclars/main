@@ -9,27 +9,30 @@
 	<?php echo $scripts_for_layout."\n"; ?>
 </head>
 <body>
-<div id="top">
-	<div id="header">
-		<?php echo $html->image("YouXpress_logo.png", array("alt"=>"テスト")) ?>
-		<h4>
-<?php if(!empty($auth)): ?>
-	Welocome! <?php echo h($auth['email']); ?> <?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?>
-<?php else: ?>
-	<?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '.$html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?>
-<?php endif; ?>
-		</h4>
-		<p>Join the information party, Express the best of you!</p>
+<div id="container">
+	<div id="image">
+		<h1>YouXpress</h1>
+		<h2>Join the information party, Express the best of you!</h2>
+                <?php if(!empty($auth)): ?>
+			<h3>Welocome! <?php echo h($auth['username']); ?> <?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?></h3>
+		<?php else: ?>
+			<h3><?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '.$html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?></h3>
+		<?php endif; ?>
 	</div>
-	<div id="contents">
-		<div id="main">
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li>aaa</li>
+			</ul>
+		</div>
+	</div>
+	<div id="content">
 <!-- START content -->
 <?php
 	$session->flash();
 	echo $content_for_layout."\n";
 ?>
 <!-- END content -->
-		</div>
 	</div>
 	<div id="footer">
 			<?php echo $html->link('Copyright 2011 YouXpress', 'http://www.youxpress.com/', array('target'=>'_blank'), null, false)."\n"; ?>

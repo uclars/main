@@ -1,7 +1,9 @@
+<?php if(!empty($auth)): ?>
 <?php echo $this->Form->create('Post', array('action' => 'add')); ?>
 <p><?php echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;')) ?>
 <?php echo $this->Form->end('GO') ?></p>
 </form>
+<?php endif; ?>
 <table>
 <?php foreach($posts as $post) { ?>
 <tr>
