@@ -21,5 +21,29 @@ class PostsController extends AppController {
 		}
 		$this->redirect('/home');
 	}
+
+	function action(){
+                $id = $this->params['named']['id'];
+                $do = $this->params['named']['do'];
+
+                switch($do){
+                        case "follow":
+                                $me = $this->Session->read('Auth.User');
+                                $this->_follow_user($me['id'], $id);
+                                $msg = "You have followed a user!";
+                        break;
+
+                        case "unfollow":
+                                $me = $this->Session->read('Auth.User');
+                                $this->_unfollow_user($me['id'], $id);
+                                $msg = "You have unfollowed a user!";
+                        break;
+                }
+                $this->Session->write('msg', $msg);
+
+                $this->redirect('/');
+        }
+
+
 }
 ?>

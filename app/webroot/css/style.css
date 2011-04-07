@@ -11,13 +11,13 @@ body
 a
 {
 	text-decoration: none;
-	color: #FFF;
+	color: #f7376b;
 }
 
 a:hover
 {
 	text-decoration: none;
-	color: #5c0088;
+	color: #ff9900;
 }
 
 img
@@ -69,6 +69,11 @@ img
         letter-spacing: 1px;
         font-size: 120%;
         font-weight: normal;
+}
+#image a
+{
+        text-decoration: none;
+        color: #fff;
 }
 
 #header

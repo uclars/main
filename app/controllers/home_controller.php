@@ -13,11 +13,30 @@ class HomeController extends AppController {
 		//親クラス呼出
 		parent::beforeFilter();
 		//[Auth]例外設定
-		$this->Auth->allow('*');
+		//$this->Auth->allow('*');
 	}
 
 	//### ホーム ###
 	function index() {
+		$this->set('posts', $this->Post->find('all'));
+		$this->set('auth', $this->Session->read('Auth.User'));
+
+		//put the posts the user following in array
+		$following_post_list = array();
+		$following_post_data = $this->requestAction('followings/following_post');
+		$i=0;
+		foreach($following_post_data as $fpdata){
+                	$following_post_list[$i]=$fpdata['Following']['following_post_id'];
+        	        $i++;
+	        }
+		$this->set('post_list', $following_post_list);
+		
+/*
+echo("<PRE>");
+var_dump($following_post_list);
+echo("</PRE>");
+*/
+
 		//$post = $this->Post->find('id');
 /*
 		$this->Post->bindModel(array(
@@ -30,22 +49,7 @@ class HomeController extends AppController {
 			)
 		), false);
 */
-
-
-		$this->set('posts', $this->Post->find('all'));
-
-/*
-echo "<PRE>";
-var_dump($post);
-echo "</PRE>";
-*/
-
-
-
 //		$this->set('owner', $this->User->findById($post['Post']['id']));
-
-		$this->set('auth', $this->Session->read('Auth.User'));
-
 		//投稿データセット
 /*
 		$this->Article->recursive = 0;
@@ -60,12 +64,8 @@ echo "</PRE>";
 			)
 		), false);
 */
-
-
 //		$this->paginate = array('order' => 'Article.id DESC');
 //		$this->set('datas', $this->paginate(array('Article.deleted' => 0)));
-
-
 		//重複登録対策(キー発行)
 //		if ($this->Auth->user()) {
 //			$this->data['Request']['id'] = AppController::_getRequestId();

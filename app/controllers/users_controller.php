@@ -2,6 +2,8 @@
 class UsersController extends AppController
 {
    var $components = array('Auth', 'Session');
+   var $layout = "home";
+
 
    function beforeFilter() {
 	parent::beforeFilter(); 
@@ -88,7 +90,7 @@ class UsersController extends AppController
 
 
 
-	}
+   }
 
    function logout() {
 	$this->Auth->logout();
@@ -121,11 +123,22 @@ class UsersController extends AppController
        }
    }
 
-/*
-   function save_hash($input_data) {
-       $this->save($insert_data);
-   }
-*/
 
+   function show_users(){
+	$this->User->recursive=0;
+	$user_list = $this->User->find('all');
+
+	//put the followers who are followed by this user in array
+	$follower_list = array();
+	$follower_data = $this->requestAction('followings/following_user');
+	$i=0;
+	foreach($follower_data as $fdata){
+		$follower_list[$i]=$fdata['Following']['following_user_id'];
+		$i++;
+	}
+
+	$this->set('user_list', $user_list);
+	$this->set('follower_list', $follower_list);
+   }
 }
 ?>

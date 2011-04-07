@@ -1,3 +1,4 @@
+TOP
 <?php if(!empty($auth)): ?>
 <?php echo $this->Form->create('Post', array('action' => 'add')); ?>
 <p><?php echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;')) ?>
@@ -14,17 +15,7 @@
 <td><?php echo h($post['Post']['created']); ?></td>
 </tr>
 <tr>
-<td colspan="2">
-<?php
-
-	echo h($post['Post']['body']);
-	if(in_array($post['Post']['id'], $post_list)){
-                echo $html->link(' unfollow', array('controller'=>'followings', 'action'=>'action', 'do'=>'unfollow_post', 'id'=>$post['Post']['id']));
-	}else{
-		echo $html->link(' follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_post', 'id'=>$post['Post']['id']));
-	}
-?>
-</td>
+<td colspan="2"><?php echo h($post['Post']['body']); ?></td>
 </tr>
 <?php } ?>
 </table>
