@@ -26,13 +26,13 @@ exit;
 		return $following_user;
 	}
 
-	function following_post(){
+	function following_topic(){
                 $userid= 1;
                 $auth = $this->Session->read('Auth.User');
 
-                $conditions = array('user_id' => $auth['id'], 'NOT'=>array('following_post_id'=>NULL));
+                $conditions = array('user_id' => $auth['id'], 'NOT'=>array('following_topic_id'=>NULL));
                 $order = array('id DESC');
-                $following_post = $this->Following->find('all', array('conditions' => $conditions, 'order' => $order));
+                $following_topic = $this->Following->find('all', array('conditions' => $conditions, 'order' => $order));
 
 /*
 echo("<PRE>");
@@ -41,7 +41,7 @@ echo("</PRE>");
 exit;
 */
 
-                return $following_post;
+                return $following_topic;
         }
 
 	function action(){
@@ -61,16 +61,16 @@ exit;
 				$msg = "You have unfollowed a user!";
 			break;
 
-                        case "follow_post":
+                        case "follow_topic":
                                 $me = $this->Session->read('Auth.User');
-                                $this->_follow_post($me['id'], $id);
-                                $msg = "You have followed a post!";
+                                $this->_follow_topic($me['id'], $id);
+                                $msg = "You have followed a topic!";
                         break;
 
-                        case "unfollow_post":
+                        case "unfollow_topic":
                                 $me = $this->Session->read('Auth.User');
-                                $this->_unfollow_post($me['id'], $id);
-                                $msg = "You have unfollowed a post!";
+                                $this->_unfollow_topic($me['id'], $id);
+                                $msg = "You have unfollowed a topic!";
                         break;
 		}
 		$this->Session->write('msg', $msg);
@@ -119,13 +119,13 @@ exit;
                 }
 	}
 
-        function _follow_post($me, $my_followers){
+        function _follow_topic($me, $my_followers){
                 $count = $this->_check_count($me, $my_followers);
 
                 if($count == 0){
                         $fdata = array();
                         $fdata['Following']['user_id'] = $me;
-                        $fdata['Following']['following_post_id'] = $my_followers;
+                        $fdata['Following']['following_topic_id'] = $my_followers;
 /*
 echo("<PRE>");
 var_dump($fdata);
@@ -137,11 +137,11 @@ exit;
                 }
         }
 
-        function _unfollow_post($me, $my_followers){
+        function _unfollow_topic($me, $my_followers){
                 $count = $this->_check_count($me, $my_followers);
 
                 if($count == 0){
-                        $fdata = array('user_id' => $me, 'following_post_id' => $my_followers);
+                        $fdata = array('user_id' => $me, 'following_topic_id' => $my_followers);
 
 /*
 echo("<PRE>");

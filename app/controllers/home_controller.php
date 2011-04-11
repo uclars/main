@@ -6,7 +6,7 @@ class HomeController extends AppController {
 	var $name = 'Home';
 	var $helpers = array('Html', 'Form');
 	var $layout = "home";
-	var $uses = array('User', 'Post');
+	var $uses = array('User', 'Topic', 'Comment');
 
 	//### アクションが実行される前に実行 ###
 	function beforeFilter() {
@@ -18,18 +18,20 @@ class HomeController extends AppController {
 
 	//### ホーム ###
 	function index() {
-		$this->set('posts', $this->Post->find('all'));
 		$this->set('auth', $this->Session->read('Auth.User'));
 
+/*
 		//put the posts the user following in array
-		$following_post_list = array();
-		$following_post_data = $this->requestAction('followings/following_post');
+		$following_topic_list = array();
+		$following_topic_data = $this->requestAction('followings/following_topic');
 		$i=0;
-		foreach($following_post_data as $fpdata){
-                	$following_post_list[$i]=$fpdata['Following']['following_post_id'];
+		foreach($following_topic_data as $fpdata){
+                	$following_topic_list[$i]=$fpdata['Following']['following_topic_id'];
         	        $i++;
 	        }
-		$this->set('post_list', $following_post_list);
+		$this->set('topic_list', $following_topic_list);
+*/
+
 		
 /*
 echo("<PRE>");
@@ -51,21 +53,57 @@ echo("</PRE>");
 */
 //		$this->set('owner', $this->User->findById($post['Post']['id']));
 		//投稿データセット
+
 /*
-		$this->Article->recursive = 0;
-		$this->Article->bindModel(array(
+		$this->Topic->recursive = 0;
+		$this->Topic->bindModel(array(
 			'hasOne' => array(
-				'CommentArticle' => array(
-					'className' => 'CommentArticle',
-					'foreignKey' => 'article_id',
-					'fields' => 'CommentArticle.Count',
+				'CommentTopic' => array(
+					'className' => 'CommentTopic',
+					'foreignKey' => 'topic_id',
+					'fields' => 'CommentTopic.Count',
 					'type' => 'LEFT'
 				)
 			)
 		), false);
 */
-//		$this->paginate = array('order' => 'Article.id DESC');
-//		$this->set('datas', $this->paginate(array('Article.deleted' => 0)));
+                $this->Topic->recursive = 0;
+                $this->Topic->bindModel(array(
+                        'hasOne' => array(
+                                'Comment' => array(
+                                        'className' => 'Comment',
+                                        'foreignKey' => 'topic_id',
+                                        'fields' => 'id, body, created',
+                                        'type' => 'LEFT'
+                                )
+                        )
+                ), false);
+
+		$topics = $this->Topic->find('all', array('conditions' => array('Comment.deleted' => 0)));
+		$this->set('datas', $topics);
+
+                //put the posts the user following in array
+                $following_topic_list = array();
+                $following_topic_data = $this->requestAction('followings/following_topic');
+                $i=0;
+                foreach($following_topic_data as $fpdata){
+                        $following_topic_list[$i]=$fpdata['Following']['following_topic_id'];
+                        $i++;
+                }
+                $this->set('topic_list', $following_topic_list);
+
+
+
+/*
+echo("<PRE>");
+var_dump($topics);
+echo("</PRE>");
+exit;
+*/
+
+
+//		$this->paginate = array('order' => 'Topic.id DESC');
+//		$this->set('datas', $this->paginate(array('Topic.deleted' => 0)));
 		//重複登録対策(キー発行)
 //		if ($this->Auth->user()) {
 //			$this->data['Request']['id'] = AppController::_getRequestId();
