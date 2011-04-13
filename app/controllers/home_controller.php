@@ -8,6 +8,8 @@ class HomeController extends AppController {
 	var $layout = "home";
 	var $uses = array('User', 'Topic', 'Comment');
 
+	var $components = array('NiceCommon');
+
 	//### アクションが実行される前に実行 ###
 	function beforeFilter() {
 		//親クラス呼出
@@ -19,6 +21,11 @@ class HomeController extends AppController {
 	//### ホーム ###
 	function index() {
 		$this->set('auth', $this->Session->read('Auth.User'));
+
+
+		$dest = "2010/11/11 10:00:00";
+		echo $this->NiceCommon->getNiceTime($dest);
+
 
 /*
 		//put the posts the user following in array

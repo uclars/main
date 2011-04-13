@@ -10,19 +10,26 @@
 </head>
 <body>
 <div id="container">
-	<div id="image">
-		<h1>YouXpress</h1>
-		<h2>Join the information party, Express the best of you!</h2>
-                <?php if(!empty($auth)): ?>
-			<h3>Welocome! <?php echo h($auth['username']); ?> <?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?></h3>
-		<?php else: ?>
-			<h3><?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '.$html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?></h3>
-		<?php endif; ?>
-	</div>
+<!--		<h2>Join the information party, Express the best of you!</h2>  -->
 	<div id="header">
+		<h1>YouXpress</h1>
 		<div id="menu">
 			<ul>
-				<li>aaa</li>
+<?php if(!empty($auth)): ?>
+				<li>
+Welocome! <?php echo h($auth['username']); ?> 　
+				</li>
+				<li>
+<?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?>
+				</li>
+<?php else: ?>
+				<li>
+<?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '; ?>
+				</li>
+				<li>
+<?php echo $html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?>
+				</li>
+<?php endif; ?>
 			</ul>
 		</div>
 	</div>

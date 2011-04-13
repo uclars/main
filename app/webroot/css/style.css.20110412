@@ -34,9 +34,9 @@ img
 #image
 {
 	width: auto;
-	height: 40px;
-//	background: #0096ae url('/img/image-back.png') repeat-x;
-	background: #0096ae url('/img/blue_back.png') repeat-x;
+	height: 150px;
+	background: #0096ae url('/img/image-back.png') repeat-x;
+//	background: #0096ae url('/img/blue_back.png') repeat-x;
 }
 
 #image h1
@@ -44,10 +44,10 @@ img
 	margin: 0;
 	padding: 40px 30px 10px 0;
 	color: #FFF;
-	text-align: left;
-	letter-spacing: 0px;
-	font-size: 120%;
-	font-weight: bold;
+	text-align: right;
+	letter-spacing: -4px;
+	font-size: 400%;
+	font-weight: normal;
 }
 
 #image h2
@@ -63,8 +63,8 @@ img
 
 #image h3
 {
-        //margin: -120px;
-        padding: 0px 5px 0 0;
+        margin: -120px;
+        padding: 0px 125px 0 0;
         color: #EAEFDA;
         text-align: right;
         letter-spacing: 1px;
@@ -80,43 +80,32 @@ img
 #header
 {
 	width: auto;
-	height: 30px;
+	height: 50px;
 	background: #0096ae;
-	border-top: 1px solid #EAEFDA;
-}
-
-#header h1
-{
-        margin: 0;
-        padding: 5px 0px 0px 20px;
-        color: #FFF;
-        text-align: left;
-        letter-spacing: 0px;
-        font-size: 160%;
-        font-weight: bold;
+	border-top: 1px solid #FFF;
 }
 
 #menu
 {
 	float: right;
 	width: auto;
-	height: 5px;
+	height: 50px;
 	letter-spacing: -1px;
 	font-weight: bold;
-	font-size: 100%;
+	font-size: 125%;
 	color: #FFF;
 }
 
 #menu ul
 {
-	margin: -30px 0 0 0;
+	margin: 15px 0 0 0;
 	padding: 0 20px 0 0;
 }
 
 #menu li
 {
 	display: inline;
-	padding: -10px 0 0 15px;
+	padding: 0 0 0 15px;
 }
 
 #menu .active
