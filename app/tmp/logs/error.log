@@ -347,3 +347,7 @@
 2011-04-11 20:14:43 Warning: Warning (2): in_array() [<a href='http://php.net/function.in-array'>function.in-array</a>]: Wrong datatype for second argument in [/var/www/html/main/app/views/home/index.ctp, line 29]
 2011-04-11 20:15:39 Warning: Warning (2): in_array() [<a href='http://php.net/function.in-array'>function.in-array</a>]: Wrong datatype for second argument in [/var/www/html/main/app/views/home/index.ctp, line 29]
 2011-04-11 20:16:01 Warning: Warning (2): in_array() [<a href='http://php.net/function.in-array'>function.in-array</a>]: Wrong datatype for second argument in [/var/www/html/main/app/views/home/index.ctp, line 29]
+2011-04-13 19:57:51 Warning: Warning (2): Division by zero in [/var/www/html/main/app/controllers/components/nice_common.php, line 10]
+2011-04-13 19:59:21 Warning: Warning (2): Division by zero in [/var/www/html/main/app/controllers/components/nice_number.php, line 10]
+2011-04-13 20:00:46 Warning: Warning (2): Division by zero in [/var/www/html/main/app/controllers/components/nice_number.php, line 14]
+2011-04-13 20:09:33 Warning: Warning (2): Division by zero in [/var/www/html/main/app/controllers/components/nice_number.php, line 23]

@@ -48,3 +48,10 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
+
+define("SECMINUITE", 60);                       //1分（秒）
+define("SECHOUR",    60 * 60);                  //1時間（秒）
+define("SECDAY",     60 * 60 * 24);             //1日（秒）
+define("SECWEEK",    60 * 60 * 24 * 7);         //1週（秒）
+define("SECMONTH",   60 * 60 * 24 * 30);        //1月（秒）
+define("SECYEAR",    60 * 60 * 24 * 365);       //1年（秒）

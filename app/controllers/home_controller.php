@@ -4,11 +4,10 @@ class HomeController extends AppController {
 
 	var $components = array('Auth', 'Session');
 	var $name = 'Home';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'NiceNumber');
 	var $layout = "home";
 	var $uses = array('User', 'Topic', 'Comment');
 
-	var $components = array('NiceCommon');
 
 	//### アクションが実行される前に実行 ###
 	function beforeFilter() {
@@ -21,10 +20,6 @@ class HomeController extends AppController {
 	//### ホーム ###
 	function index() {
 		$this->set('auth', $this->Session->read('Auth.User'));
-
-
-		$dest = "2010/11/11 10:00:00";
-		echo $this->NiceCommon->getNiceTime($dest);
 
 
 /*

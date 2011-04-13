@@ -20,7 +20,7 @@
 </tr>
 <tr>
 <td><?php echo $html->link(h($topic['User']['username']), array('controller'=>'users', 'action'=>'show_users')); ?></td>
-<td><?php echo h($topic['Comment']['created']); ?></td>
+<td><?php echo $this->NiceNumber->getNiceTime(h($topic['Comment']['created'])); ?></td>
 </tr>
 <tr>
  <td colspan="2">
