@@ -2,9 +2,32 @@
 class TopicsController extends AppController {
 
 	var $name = 'Topics';
+	var $helpers = array('Html', 'Form', 'NiceNumber');
+	var $layout = "home";
+	var $uses = array('Topic', 'User', 'Comment');
+
 
 	function index() {
-		$this->set('topics', $this->Post->find('all'));
+		$topic_id = $this->params['named']['topicid'];
+		$this->set('topics', $this->Topic->find('all', array('conditions' => array('id' => $topic_id))));
+		$params = array(
+			'conditions' => array('Comment.deleted' => 0, 'Comment.topic_id' => $topic_id),
+			'order' => array('created DESC')
+		);
+		$com = $this->Comment->find('all', $params);
+		//$com = $this->Comment->find('all', array('conditions'=>array('topic_id'=>$topic_id, 'Comment.deleted' => 0)));
+		$this->set('comments', $com);
+
+
+/*
+echo("<PRE>");
+var_dump($com);
+echo("</PRE>");
+exit;
+*/
+
+
+
 	}
 
 	function view($id) {

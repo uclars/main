@@ -1,6 +1,11 @@
 <?php
 class AppController extends Controller
 {
+
+	var $helpers = array('Facebook.Facebook');
+//	var $components = array('Auth', 'Facebook.Connect');
+
+/*
     function checkSession()
     {
         // If the session info hasn't been set...
@@ -14,5 +19,6 @@ class AppController extends Controller
 		exit();
 	}
     }
+*/
 }
 ?>

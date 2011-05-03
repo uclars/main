@@ -10,6 +10,14 @@ class Comment extends AppModel {
                         'fields' => 'Topic.id, Topic.body',
                         'order' => '',
                         'type' => 'INNER'
+                ),
+                'User' => array(
+                        'className' => 'User',
+                        'foreignKey' => 'user_id',
+                        'conditions' => '',
+                        'fields' => 'User.id, User.username, User.profile_img',
+                        'order' => '',
+                        'type' => 'INNER'
                 )
         );
 }

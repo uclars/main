@@ -2,44 +2,50 @@
 class FollowingsController extends AppController
 {
 	var $name = 'Followings';
-	var $components = array('Auth', 'Session');
 
 	function index(){
 
 	}
 
 	function following_user(){
-		$userid= 1;
-		$auth = $this->Session->read('Auth.User');
-
-		$conditions = array('user_id' => $auth['id'], 'NOT'=>array('following_user_id'=>'NULL'));
+		$userid= $this->params['userid'];
+		$conditions = array('user_id' => $userid, 'NOT'=>array('following_user_id'=>'NULL'));
 		$order = array('id DESC');
 		$following_user = $this->Following->find('all', array('conditions' => $conditions, 'order' => $order));
 
+
 /*
+echo $userid;
 echo("<PRE>");
-var_dump($following_user);
+var_dump($this->params);
 echo("</PRE>");
 exit;
 */
+
+
 
 		return $following_user;
 	}
 
 	function following_topic(){
-                $userid= 1;
-                $auth = $this->Session->read('Auth.User');
+		$me_array = $this->Session->read('Auth.User');
+		$me = $me_array['id'];
+		$following_topic = null;
 
-                $conditions = array('user_id' => $auth['id'], 'NOT'=>array('following_topic_id'=>NULL));
-                $order = array('id DESC');
-                $following_topic = $this->Following->find('all', array('conditions' => $conditions, 'order' => $order));
+		if($me){
+			$conditions = array('user_id' => $me, 'NOT'=>array('following_topic_id'=>NULL));
+			$order = array('id DESC');
+			$following_topic = $this->Following->find('all', array('conditions' => $conditions, 'order' => $order));
+		}
+
 
 /*
 echo("<PRE>");
-var_dump($following_post);
+var_dump($me);
 echo("</PRE>");
 exit;
 */
+
 
                 return $following_topic;
         }

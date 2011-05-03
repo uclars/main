@@ -2,7 +2,7 @@ body
 {
 	margin: 0;
 	padding: 0;
-	background: #FFF;
+	background: #EEF1E2;
 	color: #000;
 	font-family: arial, verdana, tahoma, times new roman;
 	font-size: 80%;
@@ -28,7 +28,7 @@ img
 #container
 {
 	margin: 0 auto;
-	width: 800px; // change this to what ever percentage you like if you want a liquid layout or if you want a fixed size use for example 800px
+	width: 85%; // change this to what ever percentage you like if you want a liquid layout or if you want a fixed size use for example 800px
 }
 
 #image
@@ -77,105 +77,53 @@ img
         color: #fff;
 }
 
-/* HEADER */
-
-.header-wrapper
+#header
 {
-	width:auto;
+	width: auto;
+	height: 30px;
 	background: #0096ae;
-	height:36px; 
-	text-align:right; 
-	font-family:Lucida Grande,Arial,sans-serif; 
-	font-size:13px; 
-	font-weight:bold;
-	border-bottom: 2px solid #FFFFFF;
-	margin:0px auto 10px auto;
-	
+	border-top: 1px solid #EAEFDA;
 }
 
-
-.logo
+#header h1
 {
-        font-size:150%;
+        margin: 0;
+        padding: 5px 0px 0px 20px;
+        color: #FFF;
+        text-align: left;
+        letter-spacing: 0px;
+        font-size: 160%;
+        font-weight: bold;
+}
+
+#menu
+{
+	float: right;
+	width: auto;
+	height: 5px;
+	letter-spacing: -1px;
+	font-weight: bold;
+	font-size: 100%;
 	color: #FFF;
-        font-weight:bold;
-	background: #0096ae;
-	margin:5px 0px 0px 15px;
-	padding: 0px;
-	float: left;
-	
 }
 
-.logo a
+#menu ul
 {
-	color:#FFF
+	margin: 0 0 0 0;
+	padding: 0 10px 0 0;
 }
 
-.step-button
+#menu li
 {
-	margin:0 0 0 90px;
+	display: inline;
+	padding: -10px 0 0 15px;
 }
 
-.top-margin
+#menu .active
 {
-	margin-top:10px;
+	text-decoration: none;
+	color: #f7376b;
 }
-
-.bottom-margin
-{
-	margin-bottom:10px;
-}
-.left-margin
-{
-	margin-left:10px;	
-}
-
-.right-margin
-{
-	margin-right:10px;	
-}
-
-.right-margin-small
-{
-	margin-right:5px;
-	
-}
-
-.float-left
-{
-	float:left;
-	display:inline;
-}
-
-.float-right
-{
-	float:right;
-	display:inline;
-}
-
-
-#menu {
-  position: absolute;
-  top: 22px;
-  left: 180px; }
-#menu li {
-  list-style-type: none;
-  float: left;
-  margin-left: 20px; }
-#menu li a {
-  font-size: 110%; }
-
-#nav {
-  position: absolute;
-  top: 20px;
-  left: 85%; }
-#nav li {
-  list-style-type: none;
-  float: left; }
-
-
-
-
 
 #content
 {

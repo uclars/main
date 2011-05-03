@@ -1,4 +1,5 @@
-<?= $facebook->html(); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 	<?php echo $html->charset()."\n"; ?>
 	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
@@ -10,26 +11,28 @@
 <body>
 <div id="container">
 <!--		<h2>Join the information party, Express the best of you!</h2>  -->
-	<div class="header-wrapper" style="margin:0px auto 0px auto;">
-		<div style="width:auto; margin:0px auto 0px auto; text-align:left; padding:0px;">
-			<div class="logo"><a href="/">YouXpress</a></div>
-			<div class="float-right"> 
-				<?php  if(!empty($auth)): ?>
-					<div class="float-left right-margin" style="margin-top:3px;">
-						Welocome! <?php echo($html->link(h($auth['username']),array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
-						&nbsp;&nbsp;
-						<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
-					</div>
-				<?php  else: ?>
-                                        <div class="float-left right-margin" style="margin-top:3px;">
-						<?php echo $facebook->login(); ?>
-                                                &nbsp;&nbsp;
-                                        </div>
-				<?php  endif; ?>
-			</div>
+	<div id="header">
+		<h1>YouXpress</h1>
+		<div id="menu">
+			<ul>
+<?php if(!empty($auth)): ?>
+				<li>
+Welocome! <?php echo h($auth['username']); ?> 　
+				</li>
+				<li>
+<?php echo $html->link('[logout]', array('controller'=>'users', 'action'=>'logout')); ?>
+				</li>
+<?php else: ?>
+				<li>
+<?php echo $html->link('[register]', array('controller'=>'users', 'action'=>'add')).' '; ?>
+				</li>
+				<li>
+<?php echo $html->link('[login]', array('controller'=>'users', 'action'=>'login')); ?>
+				</li>
+<?php endif; ?>
+			</ul>
 		</div>
 	</div>
-
 	<div id="content">
 <!-- START content -->
 <?php
@@ -69,6 +72,5 @@
 <?php endif; ?>
 <!-- END debug -->
 <?php endif; ?>
-<?= $facebook->init(); ?>
 </body>
 </html>
