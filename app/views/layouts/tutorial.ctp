@@ -17,7 +17,11 @@
 			<div class="float-right"> 
 				<?php  if(!empty($auth)): ?>
 					<div class="float-left right-margin" style="margin-top:3px;">
-						<?php echo($html->link('follow', array('controller'=>'topics', 'action'=>'index'))); ?>
+						<?php
+							if($phase==1){
+								echo ($html->link('follows',array('controller'=>'tutorials',  'action'=>'phase', 2)));
+							}
+						?>
 						Welocome! <?php echo($html->link(h($auth['username']),array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
 						&nbsp;&nbsp;
 						<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>

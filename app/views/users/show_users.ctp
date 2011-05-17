@@ -17,16 +17,16 @@ else{
 		echo "　　you are following";
 	}
 	else{
-		echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_user', 'id'=>$target_user['User']['id']));;
+		echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_user', 'id'=>$target_user['User']['id']));
 	}
 }
-echo "<BR /><BR />";
+echo "<br /><BR />";
 
 if($target_user['User']['id']===$me){
-	echo "You are following:<br /><br />";
+	echo "You are following:<br />";
 }
 else{
-	echo $target_user['User']['username']." is following:<br /><br />";
+	echo $target_user['User']['username']." is following:<br />";
 }
 
 
@@ -44,13 +44,30 @@ foreach($user_list as $ulist){
 		echo"<br />";
 	}
 }
-?>
-<?php
+echo "<br />";
+echo "Topics you created:<br />";
+foreach($target_topics as $ttopics){
+	echo $ttopics['Topic']['body']."<BR />";
+}
 
+echo "<br />";
+echo "Comments you wrote:<br />";
+foreach($target_comments as $tcomments){
+	echo $tcomments['Comment']['body']." ".$html->link('delete', array(
+			'controller' => 'comments',
+			'action' => 'delete',
+			'cid' => $tcomments['Comment']['id']
+		));
+	echo "<BR />";
+}
+
+
+/*
 $tm = in_array(3,$follower_list);
-
 echo "<PRE>";
 var_dump($tm);
 echo "</PRE>";
+*/
+
 ?>
 

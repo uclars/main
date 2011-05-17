@@ -81,7 +81,16 @@ exit;
 		}
 		$this->Session->write('msg', $msg);
 
-		$this->redirect('/');
+		$tutorial_flag = $this->Session->read('phase');
+
+		/// if in tutorial, redirect to the tutorial page
+		/// else, redirect to the top paeg
+		if(!empty($tutorial_flag)){
+			$this->redirect('/tutorials/phase/3');
+		}
+		else{
+			$this->redirect('/');
+		}
 	}
 
 	function _check_count($myself, $myfollowers){

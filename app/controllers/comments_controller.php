@@ -5,17 +5,6 @@ class CommentsController extends AppController {
 	var $helpers = array('Html', 'Form');
 	var $layout = 'home';
 
-/*
-	//### アクションが実行される前に実行 ###
-	function beforeFilter() {
-		//親クラス呼出
-		parent::beforeFilter();
-		//[Auth]例外設定
-		$this->Auth->allow('*');
-	}
-*/
-
-
 	function index() {
 		$this->set('comments', $this->Post->find('all'));
 	}
@@ -45,7 +34,6 @@ exit;
 			}
 		}
 		else if(!empty($comment_id)){
-
 			$params = array(
 				'conditions' => array('Comment.id'=>$comment_id),
 			);
@@ -71,6 +59,19 @@ exit;
 		else{
 			$this->redirect('/home');
 		}
+	}
+
+	function delete(){
+		$comment_id = $this->params['named']['cid'];
+
+		$data = array();
+		$data['Comment']['id'] = $comment_id;
+		$data['Comment']['deleted'] = 1;
+
+		$this->Comment->begin();
+		$this->Comment->save($data, false);
+		$this->Comment->commit();
+		$this->redirect('/');
 	}
 
 	function action(){

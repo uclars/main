@@ -25,11 +25,13 @@ foreach($datas as $topic) {
 <tr>
 <td rowspan="4">
 <?php
+	echo $this->Html->image(h($topic['User']['profile_img']));
+	/*
 	echo $this->Html->image(h($topic['User']['profile_img']), array(
 			'alt' => 'tavivit',
 			'width' => '50px'
 		)); 
-
+	*/
 ?>
 </td>
 </tr>
@@ -47,7 +49,11 @@ foreach($datas as $topic) {
 <tr>
 <td colspan="2">
 <?php
+	echo $html->link(h($topic['Topic']['body']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$topic['Topic']['id']));
+
+/*
 	echo h($topic['Topic']['body']);
+
 	if($topic_list){
 		if(in_array($topic['Topic']['id'], $topic_list)){
         	        echo $html->link(' unfollow', array('controller'=>'followings', 'action'=>'action', 'do'=>'unfollow_topic', 'id'=>$topic['Topic']['id']));
@@ -55,6 +61,7 @@ foreach($datas as $topic) {
 			echo $html->link(' follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$topic['Topic']['id']));
 		}
 	}
+*/
 ?>
 </td>
 </tr>

@@ -6,10 +6,35 @@ class TopicsController extends AppController {
 	var $layout = "home";
 	var $uses = array('Topic', 'User', 'Comment');
 
+	function index(){
+		//get all topics
+		$params = array(
+			'conditions' => array('Topic.deleted'=>0),
+			'order' => array('created DESC')
+		);
 
-	function index() {
+		$this->set('topics', $this->Topic->find('all', $params));
+
+		$me_array = $this->Session->read('Auth.User');
+		$me = $me_array['id'];
+
+		//get following info
+		$following_topic_list = array();
+
+		//get the topics list
+		$following_topic_list = $this->_getFollowingTopicList($me);
+		$this->set('following_topic_list', $following_topic_list);
+
+	}
+
+	function show_topic() {
 		$topic_id = $this->params['named']['topicid'];
 		$this->set('topics', $this->Topic->find('all', array('conditions' => array('id' => $topic_id))));
+
+		$me_array = $this->Session->read('Auth.User');
+		$me = $me_array['id'];
+
+
 		$params = array(
 			'conditions' => array('Comment.deleted' => 0, 'Comment.topic_id' => $topic_id),
 			'order' => array('created DESC')
@@ -19,13 +44,20 @@ class TopicsController extends AppController {
 		$this->set('comments', $com);
 
 
+		//get following info
+		$following_topic_list = array();
+
+		//get the topics list
+		$following_topic_list = $this->_getFollowingTopicList($me);
+		$this->set('following_topic_list', $following_topic_list);		
+
+
 /*
 echo("<PRE>");
-var_dump($com);
+var_dump($following_topic_list);
 echo("</PRE>");
 exit;
 */
-
 
 
 	}
@@ -68,5 +100,20 @@ exit;
         }
 
 
+	function _getFollowingTopicList($userid){
+		$following_topic_list = array();
+		$topic_list = $this->requestAction(array(
+				'controller' => 'followings',
+				'action' => 'following_topic'
+			));
+
+		$i=0;
+		foreach($topic_list as $tlist){
+			$following_topic_list[$i]=$tlist['Following']['following_topic_id'];
+			$i++;
+		}
+
+		return $following_topic_list;
+	}
 }
 ?>

@@ -5,6 +5,7 @@ class UsersController extends AppController
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form', 'NiceNumber');
 	var $layout = "home";
+	var $uses = array('User', 'Topic', 'Comment');
 
 
    function beforeFilter() {
@@ -102,6 +103,57 @@ class UsersController extends AppController
 		$this->redirect('/home/');
 	}
 
+	function register() {
+/*
+		/// haven't input a nickname
+		if(!empty($this->params['pass'][0])) {
+			$this->set('userid', $this->params['pass'][0]);
+			return;
+		}
+*/
+		$first_time = $this->Session->read('firsttime');
+
+		if(!empty($first_time)){
+
+			/// input a nickname
+			if(!empty($this->params['data']['User']['username'])) {
+				$id_array = $this->Session->read('Auth.User');
+				$nickname = $this->params['data']['User']['username'];
+				$this->Session->write('nick_name', $nickname);
+				$check_existance = $this->User->find(array('username'=>$nickname));
+
+				if(!$check_existance){
+					$id = $this->Session->read('Auth.User');
+	
+					$data = array();
+					$data['User']['id'] = $id_array['id'];
+					$data['User']['username'] = $nickname;
+					$data['User']['profile_img'] = '/img/profile/'.$nickname.'.png';
+					$fields = array('username', 'profile_img');
+					$this->User->save($data, false, $fields);
+
+					$user_array = $this->Session->read('Auth.User');
+					$user_array['username'] = $nickname;
+					$this->Session->write('Auth.User', $user_array);
+					$this->Session->delete('firsttime');
+					$this->redirect('/home');
+/*
+echo"<PRE>";
+var_dump($this->Session->read('firsttime'));
+echo"</PRE>";
+exit;
+*/
+
+				}
+				else{ //nickname is already taken 
+					$this->redirect(array('action'=>'register', $id_array['id']));
+				}
+				return;
+
+			}
+		}
+	}
+
 	function add() {
 		if($this->Auth->user()){
 			$this->set('msg', 'Already registered');
@@ -130,13 +182,13 @@ class UsersController extends AppController
 
 
 
-   function show_users(){
-	$id = $this->params['named']['id'];
-	$me_array = $this->Session->read('Auth.User');
-	$me = $me_array['id'];
+	function show_users(){
+		$id = $this->params['named']['id'];
+		$me_array = $this->Session->read('Auth.User');
+		$me = $me_array['id'];
 
-	$t_user = $this->User->find(array('id'=>$id));
-	$this->set('target_user', $t_user);
+		$t_user = $this->User->find(array('id'=>$id));
+		$this->set('target_user', $t_user);
 
 
 
@@ -148,31 +200,71 @@ echo("</PRE>");
 
 
 
+		/// get Following info  ///
+		$this->User->recursive=0;
+		$user_list = $this->User->find('all');
 
-	$this->User->recursive=0;
-	$user_list = $this->User->find('all');
+		$follower_list = array();
+		$my_follower_list = array();
 
-	//put the followers who are followed by clicked id in array
-	$follower_list = array();
-	$follower_data = $this->requestAction(array('controller' => 'followings', 'action' => 'following_user'), array('userid' => $id));
-	$i=0;
-	foreach($follower_data as $fdata){
-		$follower_list[$i]=$fdata['Following']['following_user_id'];
-		$i++;
+		// get follower's list for the user you are watching, and your followers
+		$follower_list = $this->_getFollowerList($id);
+		$my_follower_list = $this->_getFollowerList($me);
+
+		$this->set('user_list', $user_list);
+		$this->set('follower_list', $follower_list);
+		$this->set('my_follower_list', $my_follower_list);
+		///                   ////
+
+
+		/// get target user topics   ///
+		$target_topics = array();
+		if(!empty($id)){
+			$target_topics = $this->_getTopics($id);
+		}
+		$this->set('target_topics', $target_topics);
+		///                  ///
+
+		/// get target user comments ///
+		$target_comments = array();
+		if(!empty($id)){
+			$target_comments = $this->_getComments($id);
+		}
+		$this->set('target_comments', $target_comments);
 	}
 
-	//put the my(logged in user) followers
-	$my_follower_list = array();
-	$my_follower_data = $this->requestAction(array('controller' => 'followings', 'action' => 'following_user'), array('userid' => $me));
-	$j=0;
-	foreach($my_follower_data as $mfdata){
-		$my_follower_list[$j]=$mfdata['Following']['following_user_id'];
-		$j++;
+	function _getFollowerList($id){
+		//put the followers who are followed by clicked id in array
+		$follower_list = array();
+		$follower_data = $this->requestAction(array(
+				'controller' => 'followings', 
+				'action' => 'following_user'
+			), array('userid' => $id));
+	        $i=0;
+		foreach($follower_data as $fdata){
+			$follower_list[$i]=$fdata['Following']['following_user_id'];
+			$i++;
+        	}
+
+		return $follower_list;
+	}   
+
+	function _getTopics($id){
+		$params = array(
+			'conditions' => array('Topic.user_id'=>$id, 'Topic.deleted'=>0),
+		);
+		$target_topic = $this->Topic->find('all', $params);
+
+		return $target_topic;
 	}
 
-	$this->set('user_list', $user_list);
-	$this->set('follower_list', $follower_list);
-	$this->set('my_follower_list', $my_follower_list);
-   }
+	function _getComments($id){
+		$params = array(
+			'conditions' => array('Comment.user_id'=>$id, 'Comment.deleted'=>0),
+		);
+		$target_comment = $this->Comment->find('all', $params);
+
+		return $target_comment;
+	}
 }
 ?>
