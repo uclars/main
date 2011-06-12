@@ -23,6 +23,7 @@ class HomeController extends AppController {
 	/// If username is null -> just registered user, redirect to the registration page
 	function _checkRegister(){
 		$user_array = $this->Session->read('Auth.User');
+
 		$username = $user_array['username'];
 		$userid = $user_array['id'];
 		$first_time = $this->Session->read('firsttime');
@@ -48,6 +49,9 @@ class HomeController extends AppController {
 	function _checkTutorial(){
 		$user_array = $this->Session->read('Auth.User');
 		$t_phase = $this->Session->read('phase');
+
+
+
 		/// if you don't have tutorial phase in the session, call SQL
 		if(empty($t_phase)){
 			$params = array(
@@ -148,38 +152,55 @@ echo("</PRE>");
 		$topics = $this->Topic->find('all', array('conditions' => array('Comment.deleted' => 0)));
 */
 
+		$timeline_array=array();
 
+		//paginate
 		$this->Comment->recursive = 0;
-		$params = array(
-			'conditions' => array('Comment.deleted' => 0),
-			'order' => array('created DESC')
-		);
-		$topics = $this->Comment->find('all', $params);
-		//$topics = $this->Comment->find('all', array('conditions' => array('Comment.deleted' => 0)));
-		$this->set('datas', $topics);
 
                 //put the posts the user following in array
-                $following_topic_list = array();
+                //$following_topic_list = array();
+                $following_topic_list = "";
                 $following_topic_data = $this->requestAction('followings/following_topic');
-                $i=0;
+		////  condition array  * array[$j]['or'][$i]
+		////                     array[$j]['and'][$num]
+                $i=0; //numbers of 'or'
+		$j=0; //numbers of 'or' and 'and'
 
 		if($following_topic_data){
 			foreach($following_topic_data as $fpdata){
-				$following_topic_list[$i]=$fpdata['Following']['following_topic_id'];
+				$condition[$j]['or'][$i] = array('Comment.topic_id'=>$fpdata['FollowingTopics']['following_topic_id']);
+				$i++;
+			}
+		}
+
+
+		//put a user the user following in array
+                //$following_user_list = array();
+                $following_user_list = "";
+                $following_user_data = $this->requestAction('followings/following_user');
+
+		if($following_user_data){
+			foreach($following_user_data as $fudata){
+				$condition[$j]['or'][$i] = array('Comment.user_id'=>$fudata['FollowingUsers']['following_user_id']);
 				$i++;
 			}	
-			$this->set('topic_list', $following_topic_list);
 		}
-		else{
-			$this->set('topic_list', '');
-		}
+		$j++; //increment
+
+		$condition[$j]['and'] = array(array('Comment.deleted'=>0));
+
+		$this->paginate['conditions']=$condition;
+		$this->paginate['order']='created';
+		$this->set('timelines',$this->paginate('Comment'));
+//		$this->set('timelines',$timeline_array);
 
 /*
 echo("<PRE>");
-var_dump($following_topic_list);
+var_dump($timeline_array);
 echo("</PRE>");
 exit;
 */
+
 
 
 //		$this->paginate = array('order' => 'Topic.id DESC');

@@ -7,7 +7,7 @@ class Comment extends AppModel {
                         'className' => 'Topic',
                         'foreignKey' => 'topic_id',
                         'conditions' => '',
-                        'fields' => 'Topic.id, Topic.body',
+                        'fields' => 'Topic.id, Topic.body, Topic.title',
                         'order' => '',
                         'type' => 'INNER'
                 ),

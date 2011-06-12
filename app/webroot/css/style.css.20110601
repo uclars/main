@@ -153,24 +153,6 @@ img
 	display:inline;
 }
 
-/* main line */
-/* user icon */
-div.mainline {
-	margin-bottom: 10px;
-	padding-bottom: 10px;
-	_padding-left: 30px;
-	border-bottom: 1px dotted #cccccc;
-}
-div.mainline div.userico {
-	padding-right: 20px
-}
-div.mailine div.contents {
-	overflow: hidden;
-}
-div.mainline div.textdata {
-	line-height: 1.7;
-	color: #333333;
-}
 
 #menu {
   position: absolute;

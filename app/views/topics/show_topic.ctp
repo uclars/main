@@ -3,7 +3,7 @@ foreach($topics as $tpdata){
 	$me_array = $this->Session->read('Auth.User');
 	$me = $me_array['id'];
 
-	echo $tpdata['Topic']['body'];
+	echo $tpdata['Topic']['title'];
 
 
 	///when you already following the topic you are selecting, show 'unfollow', if you haven't followed yet, show 'follow'
@@ -24,6 +24,8 @@ foreach($topics as $tpdata){
 	echo "<br /><br />";
 
 	foreach($comments as $comdata){
+		echo $html->link($comdata['User']['username'], array('controller'=>'users', 'action'=>'show_users', 'id'=>$comdata['Comment']['user_id']));
+		echo "　";
 		echo $comdata['Comment']['body'];
 		echo "　";
 		echo $html->link('Comment', array(
@@ -35,6 +37,10 @@ foreach($topics as $tpdata){
 		echo "<br />";
 	}
 }
+
+echo $paginator->prev('<< '.__('previous', true), array(), ' ', array('class'=>'disabled'));
+echo $paginator->numbers();
+echo $paginator->next(__('next', true).' >>', array(), ' ', array('class'=>'disabled'))
 
 /*
 echo "<br />";

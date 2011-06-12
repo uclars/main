@@ -2,10 +2,12 @@
 $me_array = $this->Session->read('Auth.User');
 $me = $me_array['id'];
 $topicid = $topic_id;
+$commentid = $comment_id;
 
 echo $this->Form->create('Comment', array('controller'=>'comments', 'action' => 'add'));
 echo $this->Form->hidden('topic_id',array('value'=>$topicid));
-echo $this->Form->hidden('user_id',array('value'=>$me));
+echo $this->Form->hidden('parent_id',array('value'=>$commentid));
+//echo $this->Form->hidden('user_id',array('value'=>$me));
 ?>
 
 <p>

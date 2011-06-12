@@ -53,12 +53,22 @@ foreach($target_topics as $ttopics){
 echo "<br />";
 echo "Comments you wrote:<br />";
 foreach($target_comments as $tcomments){
-	echo $tcomments['Comment']['body']." ".$html->link('delete', array(
-			'controller' => 'comments',
-			'action' => 'delete',
-			'cid' => $tcomments['Comment']['id']
-		));
-	echo "<BR />";
+	if($target_user['User']['id']===$me_array['id']){
+		echo $tcomments['Comment']['body']." ".$html->link('delete', array(
+				'controller' => 'comments',
+				'action' => 'delete',
+				'cid' => $tcomments['Comment']['id']
+			));
+		echo "  ";
+		echo $html->link(h($tcomments['Topic']['body']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$tcomments['Topic']['id']));
+		echo "<BR />";
+	}
+	else{
+		echo $tcomments['Comment']['body'];
+		echo "  ";
+		echo $html->link(h($tcomments['Topic']['body']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$tcomments['Topic']['id']));
+		echo "<BR />";
+	}
 }
 
 

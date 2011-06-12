@@ -26,7 +26,7 @@ class CommentsController extends AppController {
 			//コメントデータセット
 			$this->Comment->recursive = 0;
 			$this->paginate = array('order' => 'Comment.id');
-			$this->set('datas', $this->paginate(array('Comment.article_id' => $article_id, 'Comment.deleted' => 0)));
+			$this->set('datas', $this->paginate('Comment',array('Comment.article_id' => $article_id, 'Comment.deleted' => 0)));
 			//重複登録対策(キー発行)
 			$this->data['Request']['id'] = AppController::_getRequestId();
 			if (strcmp($this->data['Request']['id'], '') == 0) {

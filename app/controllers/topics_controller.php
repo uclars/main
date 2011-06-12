@@ -34,14 +34,22 @@ class TopicsController extends AppController {
 		$me_array = $this->Session->read('Auth.User');
 		$me = $me_array['id'];
 
-
+		//pagenate
+		$this->paginate = array(
+			'conditions' => array('Comment.deleted' => 0, 'Comment.topic_id' => $topic_id),
+			'order' => 'created DESC'
+		);
+		$this->set('comments',$this->paginate('Comment'));	
+/*
 		$params = array(
 			'conditions' => array('Comment.deleted' => 0, 'Comment.topic_id' => $topic_id),
 			'order' => array('created DESC')
 		);
 		$com = $this->Comment->find('all', $params);
+
 		//$com = $this->Comment->find('all', array('conditions'=>array('topic_id'=>$topic_id, 'Comment.deleted' => 0)));
 		$this->set('comments', $com);
+*/
 
 
 		//get following info
@@ -109,7 +117,7 @@ exit;
 
 		$i=0;
 		foreach($topic_list as $tlist){
-			$following_topic_list[$i]=$tlist['Following']['following_topic_id'];
+			$following_topic_list[$i]=$tlist['FollowingTopics']['following_topic_id'];
 			$i++;
 		}
 

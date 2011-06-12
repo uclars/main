@@ -17,18 +17,8 @@
 			<div class="float-right"> 
 				<?php  if(!empty($auth)): ?>
 					<div class="float-left right-margin" style="margin-top:3px;">
-						<?php
-							///show the follow link for phase 10
-							if($phase==10){
-								echo ($html->link('follows',array('controller'=>'tutorials',  'action'=>'phase', 10, 1)));
-							}
-							if($phase<=60){
-								echo " Welcome! newuser ";
-							}
-							else{
-								echo " Welcome! ".$auth['username'];
-							}
-						?>
+						<?php echo($html->link('follow', array('controller'=>'topics', 'action'=>'index'))); ?>
+						Welocome! <?php echo($html->link(h($auth['username']),array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
 						&nbsp;&nbsp;
 						<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
 					</div>

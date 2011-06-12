@@ -242,7 +242,7 @@ echo("</PRE>");
 			), array('userid' => $id));
 	        $i=0;
 		foreach($follower_data as $fdata){
-			$follower_list[$i]=$fdata['Following']['following_user_id'];
+			$follower_list[$i]=$fdata['FollowingUsers']['following_user_id'];
 			$i++;
         	}
 
@@ -261,6 +261,7 @@ echo("</PRE>");
 	function _getComments($id){
 		$params = array(
 			'conditions' => array('Comment.user_id'=>$id, 'Comment.deleted'=>0),
+			'order' => array('created DESC')
 		);
 		$target_comment = $this->Comment->find('all', $params);
 

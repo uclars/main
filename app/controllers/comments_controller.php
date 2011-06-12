@@ -4,12 +4,16 @@ class CommentsController extends AppController {
 	var $name = 'Comments';
 	var $helpers = array('Html', 'Form');
 	var $layout = 'home';
+	var $uses = array('User', 'Comment');
 
 	function index() {
 		$this->set('comments', $this->Post->find('all'));
 	}
 
 	function add() {
+		$me_array = $this->Session->read('Auth.User');
+		$me = $me_array['id'];
+		$tutorial_flag = $this->Session->read('phase');
 
 		$comment_id = "";
 		$topic_id = "";
@@ -18,19 +22,40 @@ class CommentsController extends AppController {
 			$topicid = $this->params['named']['topicid'];
 		}
 
-
 /*
 echo "<PRE>";
-var_dump($this->params);
+var_dump($this->data);
 echo "</PRE>";
 exit;
 */
 
 
 		if(!empty($this->data)) {
-			if($this->Comment->save($this->data, true, array('user_id', 'topic_id', 'body'))) {
-				$this->flash('Your posts have been saved','/posts');
-				return;
+			$this->data['Comment']['user_id'] = $me;
+			//$this->data['Comment']['parent_id'] = $this->data['Comment']['comment_id'];
+
+
+/*
+echo "<PRE>";
+var_dump($this->data);
+echo "</PRE>";
+exit;
+*/
+
+
+
+			if($this->Comment->save($this->data, true, array('user_id', 'topic_id', 'parent_id', 'body'))) {
+				///give 10 contribute points to commenting ///
+				$query = "update users set `cpoint`=`cpoint`+10 where `id`=".$me;
+				$this->User->query($query);
+
+				if($tutorial_flag==90){
+					$this->redirect(array("controller" => "tutorials", "action" => "phase", 90, 1));
+				}
+				else{
+					$this->flash('Your posts have been saved','/posts');
+					$this->redirect('/');
+				}
 			}
 		}
 		else if(!empty($comment_id)){
@@ -41,7 +66,7 @@ exit;
 			$target_comment = $this->Comment->find('all', $params);
 			$this->set('target_comment', $target_comment[0]['Comment']['body']);
 			$this->set('topic_id', $topicid);
-
+			$this->set('comment_id', $comment_id);
 
 
 /*
@@ -55,6 +80,16 @@ exit;
 
 			return;
 
+		}
+		else if($tutorial_flag==50){
+			$tutoria_comment=array();
+			$tutoria_comment['Comment']['user_id']=41;
+			$tutoria_comment['Comment']['topic_id']=4;
+			$tutoria_comment['Comment']['body']="Hi,".$me_array['username'];
+
+			$this->Comment->save($tutoria_comment);
+
+			return;
 		}
 		else{
 			$this->redirect('/home');

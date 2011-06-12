@@ -6,11 +6,12 @@
 </form>
 <?php endif; */?>
 
+<table>
 <?php
 foreach($timelines as $timeline) { 
 ?>
-<div class="mainline">
-	<div class="usericon">
+<tr>
+	<td rowspan="4">
 <?php
 	echo $this->Html->image(h($timeline['User']['profile_img']));
 	/*
@@ -20,23 +21,28 @@ foreach($timelines as $timeline) {
 		)); 
 	*/
 ?>
-	<?php echo $html->link(h($timeline['User']['username']), array('controller'=>'users', 'action'=>'show_users', 'id'=>$timeline['Comment']['user_id'])); ?>
-	</div>
-	<div class="textdata">
-	<?php echo $this->NiceNumber->getNiceTime(h($timeline['Comment']['created'])); ?>
+	</td>
+</tr>
+<tr>
+	<td><?php echo $html->link(h($timeline['User']['username']), array('controller'=>'users', 'action'=>'show_users', 'id'=>$timeline['Comment']['user_id'])); ?></td>
+	<td><?php echo $this->NiceNumber->getNiceTime(h($timeline['Comment']['created'])); ?></td>
+</tr>
+<tr>
+	<td colspan="2">
 <?php 
 	echo h($timeline['Comment']['body']); 
 ?>
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
 <?php
 	echo $html->link(h($timeline['Topic']['title']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$timeline['Topic']['id']));
 ?>
-	</div>
-</div>
+	</td>
+</tr>
+<tr><td colspan="3">--------------------------------------</td></tr>
 <?php 
 } 
-
-
-echo $paginator->prev('<< '.__('previous', true), array(), ' ', array('class'=>'disabled'));
-echo $paginator->numbers();
-echo $paginator->next(__('next', true).' >>', array(), ' ', array('class'=>'disabled'))
 ?>
+</table>
