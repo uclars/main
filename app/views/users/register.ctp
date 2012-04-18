@@ -25,7 +25,6 @@ echo "<br /><BR />";
 $me_array = $this->Session->read('Auth.User');
 $me = $me_array['id'];
 
-
 /*
 $tm = in_array(3,$follower_list);
 echo "<PRE>";

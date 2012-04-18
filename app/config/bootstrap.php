@@ -55,3 +55,5 @@ define("SECDAY",     60 * 60 * 24);             //1日（秒）
 define("SECWEEK",    60 * 60 * 24 * 7);         //1週（秒）
 define("SECMONTH",   60 * 60 * 24 * 30);        //1月（秒）
 define("SECYEAR",    60 * 60 * 24 * 365);       //1年（秒）
+
+define("SHOW_INVITE", TRUE); //if invite function is on=>true

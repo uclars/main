@@ -1,0 +1,289 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	background: #FFF;
+	color: #000;
+	font-family: arial, verdana, tahoma, times new roman;
+	font-size: 80%;
+}
+
+a
+{
+	text-decoration: none;
+	color: #f7376b;
+}
+
+a:hover
+{
+	text-decoration: none;
+	color: #ff9900;
+}
+
+img
+{
+	border: 0;
+}
+
+#container
+{
+	margin: 0 auto;
+	width: 800px; // change this to what ever percentage you like if you want a liquid layout or if you want a fixed size use for example 800px
+}
+
+#image
+{
+	width: auto;
+	height: 40px;
+//	background: #0096ae url('/img/image-back.png') repeat-x;
+	background: #0096ae url('/img/blue_back.png') repeat-x;
+}
+
+#image h1
+{
+	margin: 0;
+	padding: 40px 30px 10px 0;
+	color: #FFF;
+	text-align: left;
+	letter-spacing: 0px;
+	font-size: 120%;
+	font-weight: bold;
+}
+
+#image h2
+{
+	margin: -8px 0 0 0;
+	padding: 0px 17px 0 0;
+	color: #EAEFDA;
+	text-align: right;
+	letter-spacing: 1px;
+	font-size: 175%;
+	font-weight: normal;
+}
+
+#image h3
+{
+        //margin: -120px;
+        padding: 0px 5px 0 0;
+        color: #EAEFDA;
+        text-align: right;
+        letter-spacing: 1px;
+        font-size: 120%;
+        font-weight: normal;
+}
+#image a
+{
+        text-decoration: none;
+        color: #fff;
+}
+
+/* HEADER */
+
+.header-wrapper
+{
+	width:auto;
+	background: #0096ae;
+	height:36px; 
+	text-align:right; 
+	font-family:Lucida Grande,Arial,sans-serif; 
+	font-size:13px; 
+	font-weight:bold;
+	border-bottom: 2px solid #FFFFFF;
+	margin:0px auto 10px auto;
+	
+}
+
+
+.logo
+{
+        font-size:150%;
+	color: #FFF;
+        font-weight:bold;
+	background: #0096ae;
+	margin:5px 0px 0px 15px;
+	padding: 0px;
+	float: left;
+	
+}
+
+.logo a
+{
+	color:#FFF
+}
+
+.step-button
+{
+	margin:0 0 0 90px;
+}
+
+.top-margin
+{
+	margin-top:10px;
+}
+
+.bottom-margin
+{
+	margin-bottom:10px;
+}
+.left-margin
+{
+	margin-left:10px;	
+}
+
+.right-margin
+{
+	margin-right:10px;	
+}
+
+.right-margin-small
+{
+	margin-right:5px;
+	
+}
+
+.float-left
+{
+	float:left;
+	display:inline;
+}
+
+.float-right
+{
+	float:right;
+	display:inline;
+}
+
+/* main line */
+/* user icon */
+div.mainline {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	_padding-left: 30px;
+	border-bottom: 1px dotted #cccccc;
+}
+div.mainline div.userico {
+	padding-right: 20px
+}
+div.mailine div.contents {
+	overflow: hidden;
+}
+div.mainline div.textdata {
+	line-height: 1.7;
+	color: #333333;
+}
+
+#menu {
+  position: absolute;
+  top: 22px;
+  left: 180px; }
+#menu li {
+  list-style-type: none;
+  float: left;
+  margin-left: 20px; }
+#menu li a {
+  font-size: 110%; }
+
+#nav {
+  position: absolute;
+  top: 20px;
+  left: 85%; }
+#nav li {
+  list-style-type: none;
+  float: left; }
+
+
+
+
+
+#content
+{
+	width: auto;
+	height: auto;
+	background: #FFF;
+	padding: 15px;
+	line-height: 160%;
+}
+
+#content h2
+{
+	padding: 0 0 5px 0;
+	margin: 0 0 10px 0;
+	font-size: 140%;
+	letter-spacing: -1px;
+	font-weight: normal;
+	color: #e47a1a;
+	border-bottom: 1px solid #ff9900; 
+}
+
+#content p
+{
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+#content img
+{
+	float: left;
+	border: 1px solid #CCC;
+	padding: 5px;
+	margin: 0 0 0 15px;
+}
+
+#footer
+{
+	width: auto;
+	height: 35px;
+	background: #0096ae;
+	border-top: 3px solid #998195;
+	color: #B6C879;
+}
+
+#footerleft
+{
+	float: left;
+	width: 60%; // change this percentage to fit any text in either footer div - the below will auto change (width: auto)
+	text-align: left;
+	padding: 1% 2%;
+}
+
+#footerleft a
+{
+	text-decoration: none;
+	color: #32707a;
+	margin: 0 5px;
+}
+
+#footerleft #nomarginleft
+{
+	margin: 0 10px 0 0;
+	letter-spacing: -1px;
+}
+
+#footerright
+{
+	float: right;
+	width: auto;
+	text-align: right;
+	padding: 1% 2%;
+}
+
+
+#footer p
+{
+	margin: 0;
+	padding: 0;
+	letter-spacing: -1px;
+	color: #32707a;
+}
+
+#footer a
+{
+	text-decoration: none;
+	color: #f7376b;
+}
+
+#footer a:hover
+{
+	text-decoration: underline;
+	color: #f7376b;
+}

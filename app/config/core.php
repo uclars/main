@@ -108,7 +108,8 @@
  * Defines the default error type when using the log() function. Used for
  * differentiating error logging and debugging. Currently PHP supports LOG_DEBUG.
  */
-	define('LOG_ERROR', 2);
+	//define('LOG_ERROR', 2);
+	define('LOG_ERROR', 1);
 
 /**
  * The preferred session handling method. Valid values:
@@ -165,6 +166,7 @@
  * @link http://php.net/session_name
  */
 	Configure::write('Session.cookie', 'CAKEPHP');
+	//Configure::write('Session.cookie', 'WHISPRR');
 
 /**
  * Session time out time (in seconds).
@@ -197,6 +199,7 @@
  * 'Security.level' is set to 'high'.
  */
 	Configure::write('Security.level', 'medium');
+	//Configure::write('Security.level', 'low');
 
 /**
  * A random string used in security hashing methods.

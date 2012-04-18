@@ -1,7 +1,8 @@
 <?php
 class Comment extends AppModel {
         var $name = 'Comment';
-        var $displayField = 'id';
+	var $recursive = 2;
+/*        var $displayField = 'id'; */
         var $belongsTo = array(
                 'Topic' => array(
                         'className' => 'Topic',
@@ -15,10 +16,10 @@ class Comment extends AppModel {
                         'className' => 'User',
                         'foreignKey' => 'user_id',
                         'conditions' => '',
-                        'fields' => 'User.id, User.username, User.profile_img',
+                        'fields' => 'User.id, User.username, User.avator_num',
                         'order' => '',
-                        'type' => 'INNER'
-                )
-        );
+                        'type' => 'INNER' 
+		)
+	);
 }
 ?>

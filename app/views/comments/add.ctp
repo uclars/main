@@ -1,6 +1,6 @@
 <?php
 $me_array = $this->Session->read('Auth.User');
-$me = $me_array['id'];
+$me = $me_array['User']['id'];
 $topicid = $topic_id;
 $commentid = $comment_id;
 

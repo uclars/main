@@ -1,0 +1,71 @@
+<?= $facebook->html(); ?>
+<?php $auth = $this->Session->read('Auth.User'); ?>
+<head>
+	<?php echo $html->charset()."\n"; ?>
+	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<?php echo $html->meta('icon')."\n"; ?>
+	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
+	<?php echo $html->css('style')."\n"; ?>
+	<?php echo $scripts_for_layout."\n"; ?>
+</head>
+<body>
+<div id="container">
+<!--		<h2>Join the information party, Express the best of you!</h2>  -->
+	<div id="header">
+		<div id="header_wrapper">
+			<div id="logo"><h1><a href="/">Whisprr</a></h1></div>
+			<div id="header_nav">
+			<?php if(!empty($auth)): ?>
+				<table><tr><td>
+					<img src="/img/basic/note_32.png" />
+				</td><td>
+					<?php echo($html->link('TOPICS', array('controller'=>'topics', 'action'=>'index'))); ?>
+				</td><td>
+					<img src="/img/basic/casual_woman/casual_woman_32.png" />
+				</td><td>
+					<?php echo($html->link('PROFILE', array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
+				</td><td>
+					<img src="/img/basic/leaves_32.png" />
+				</td><td>
+					<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
+				</td></tr></table>
+			<?php /*echo($html->link('follow', array('controller'=>'topics', 'action'=>'index'))); ?>
+				Welocome! <?php echo($html->link(h($auth['username']),array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
+				&nbsp;&nbsp;
+					<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
+		<?php  else: */?>
+			<?php echo $facebook->login(); ?>
+		<?php  endif; ?>
+		</div>
+	</div>
+	</div>
+	<div id="wrapper">
+		<div id="content">
+<!-- START content -->
+<?php
+	$session->flash();
+	echo $content_for_layout."\n";
+?>
+<!-- END content -->
+		</div>
+		<div id="navigation_wrapper">
+			<div id="navigation">
+				<img src='/img/basic/park/park_192_words.png' wight=200 height=200/>
+			</div>
+			<div id="navigation">
+				<div class="profile">Related Topics</div>
+				<ul>
+					<li>ページ１</li>
+					<li>ページ２</li>
+					<li>ページ３</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="footer"> 
+		<?php echo $html->link('Copyright 2011 Whisprr', 'http://www.youxpress.com/', array('target'=>'_blank'), null, false)."\n"; ?>
+	</div>
+</div>
+<?= $facebook->init(); ?>
+</body>
+</html>

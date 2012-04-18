@@ -1,0 +1,378 @@
+<?php
+switch($phase){
+	case 0:
+		echo "<div id=\"tutorial0\">";
+		echo "<div id=\"facebook\">";
+		echo $facebook->login(array('scope'=>'email','size' => 'xlarge'));
+		echo "</div>";
+		echo "</div>";
+		break;
+	case 05:
+		break;
+	case 10:
+		foreach($topics as $tpdata){
+			$me_array = $this->Session->read('Auth.User');
+			$me = $me_array['id'];
+
+			echo "<div class='comment'>";
+			if($tpdata['Topic']['id']==1){
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo $html->link(h($tpdata['Topic']['title']), array('controller'=>'tutorials', 'action'=>'phase',10, 1))."&nbsp;&nbsp;&nbsp;← click the topic title!";
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+					echo h($tpdata['Following_topic_numbers']['count']);
+				echo "</span>";
+				echo "</div>";
+			}
+			else{
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo h($tpdata['Topic']['title']);
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+				///if there is number, show the nnum. if there is no number, show 0
+				if(!empty($tpdata['Following_topic_numbers']['count'])){
+					echo h($tpdata['Following_topic_numbers']['count']);
+				}
+				else{
+					echo "0";
+				}
+				echo "</span>";
+				echo "</div>";
+			}
+			echo "</div>";
+			echo "</div>";
+			echo "<div style='clear:both'></div>";
+			echo "<br />";
+		}
+		break;
+	case 20:
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+				echo "<span style='font-weight:bold; font-size:larger;'>";
+				echo $html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$topics[0]['Topic']['id']));
+				echo "</span>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo h($topics[0]['Topic']['body']);
+			echo "</div>";
+		echo "</div>";
+		//echo $this->Form->text('body', array('style' => 'width:450px; height:45px; font-size:2em; padding-top:3px;'));
+		echo "<br /><br />";
+
+		break;
+	case 30:
+		echo "<div class='comment'>";
+			echo "<div class='comment_pic'>";
+				echo $html->image($first_topic['Master_categories']['url']);
+			echo "</div>";
+			echo "<div class='comment_body'>";
+				//echo $html->link(h($first_topic['Topic']['title']), array('controller'=>'tutorials', 'action'=>'phase',30, 1));
+				echo h($first_topic['Topic']['title']);
+			echo "</div>";
+			echo "<div class='comment_text'>";
+				echo "follower ";
+				echo "<span class='num'>";
+					echo h($first_topic['Following_topic_numbers']['count']);
+				echo "</span>";
+			echo "</div>";
+		echo "</div>";
+		break;
+/// ----------------------  not used below til case 60  -----------------------------////
+	case 40:
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo h($topics[0]['Topic']['body']);
+			echo "</div>";
+		echo "</div>";
+		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
+
+		echo "<table><tr><td rowspan=4>";
+		echo $this->Html->image('/img/avator/dogs/pug/pug_48.png');
+		echo "</td></tr>";
+		echo "<tr><td>";
+		echo $html->link('lala', array('controller'=>'tutorials', 'action'=>'phase',40, 1));
+		echo "</td><td></td></tr>";
+		echo "<tr><td colspan=2>";
+		echo "click my name!";
+		echo "</td></tr><tr><td colspan=2>";
+		echo "Where are you from?";
+		echo "</td></tr></table>";
+
+		break;
+	case 50:
+		echo "<div id='profile_wrapper'>";
+			echo "<div id='profile_comments'>";
+				foreach($comments as $comdata){
+				echo "<div class='comment'>";
+					echo "<div class='comment_pic'>";
+						echo $html->image($comdata['User']['Master_avators']['url48']);
+					echo "</div>";
+					echo "<div class='comment_tutorial_body'>";
+						echo h($comdata['Topic']['title']);
+					echo "</div>";
+					echo "<div class='comment_tutorial_text'>";
+						echo h($comdata['Comment']['body']);
+					echo "</div>";
+				echo "</div>";
+				echo "<br clear='all'>";
+				}
+			echo "</div>";
+			echo "<div id='profile_desc'>";
+				echo "<div class=comment>";
+				echo "<div class=comment_pic>";
+				echo $html->image($comdata['User']['Master_avators']['url48']);
+				echo "</div>";
+				echo h($comdata['User']['username']);
+				echo "</div>";
+				echo "<span style='font-weight: bold;'>";
+				echo $html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_user', 'id'=>'74'));
+				echo "</span>";
+			echo "</div>";
+				echo "<br />";
+				//echo "<br clear='all'>";
+			echo "<div id='profile_desc'>";
+				echo "<span style='font-weight: bold;'>what I do:</span><br>";
+				echo " wife and mother";
+			echo "</div>";
+		echo "</div>";
+		break;
+//// ---------------------------------------------------------------------------------   ////
+	case 60:
+		echo "Input your user name.<br /><br />";
+		if(!empty($error_mssg)){
+			echo "<div style='color: red;'>";
+			echo $error_mssg;
+			echo "</div>";
+		}
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 60, 1)
+			)
+		    );
+		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
+		echo $this->Form->end(' POST ');
+
+		break;
+	case 70:
+		echo "<div id='profile_wrapper'>";
+			echo "<div id='profile_comments'>";
+				foreach($comments as $comdata){
+				echo "<div class='comment'>";
+					echo "<div class='comment_pic'>";
+						echo $html->image($comdata['User']['Master_avators']['url48']);
+					echo "</div>";
+					echo "<div class='comment_tutorial_body'>";
+						echo h($comdata['Topic']['title']);
+					echo "</div>";
+					echo "<div class='comment_tutorial_text'>";
+						echo h($comdata['Comment']['body']);
+					echo "</div>";
+				echo "</div>";
+				echo "<br clear='all'>";
+				}
+			echo "</div>";
+			echo "<div id='profile_desc'>";
+				echo "<div class=comment>";
+				echo "<div class=comment_pic>";
+				echo $html->image($comdata['User']['Master_avators']['url48']);
+				echo "</div>";
+				echo h($comdata['User']['username'])."<br />";
+				echo "<span style='color=#333'>followed</span>";
+				echo "</div>";
+				echo "<br clear='all'>";
+				echo " what I do:<br>";
+				echo "  wife and mother";
+			echo "</div>";
+		echo "</div>";
+		break;
+	case 75:
+		echo "<br /><br /><br />";
+		echo "<img src='/img/basic/ribbon/ribbon_48.png' style='vertical-align:middle;'/><span style='font-size:20px;'> Welcome! $username</span><br /><br />";
+		echo "Enjoy the Whisprr Life!";
+
+		break;
+	case 80:
+/*
+		echo "We will do a personality analysis for you.<br />";
+		echo "This personality analysis is based on the Western astrology and the Four Pillars of Chinese astrology.<br />";
+		echo "There are 7 personality groups as shown below.<br /><br />";
+		echo "<table><tr><td>Pug</td><td>Siberian Husky</td><td>Australian Shepherd</td><td>Boxer</td><td>Shiba Inu</td><td>Dachshund</td><td>Dingo</td></tr>";
+		echo "<tr><td><img src='/img/avator/dogs/pug/pug_64.png' /></td><td><img src='/img/avator/dogs/husky/husky_64.png' /></td><td><img src='/img/avator/dogs/shepherd/shepherd_64.png' /></td><td><img src='/img/avator/dogs/boxer/boxer_64.png' /></td><td><img src='/img/avator/dogs/shiba/shiba_64.png' /></td><td><img src='/img/avator/dogs/dachshund/dachshund_64.png' /></td><td><img src='/img/avator/dogs/dingo/dingo_64.png' /></td></tr></table>";
+
+		echo "<br /><br />";
+		echo "Input your birthday:";
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 80, 1)
+			)
+		    );
+		echo $form->datetime('birthdate','YMD','none');
+		echo $this->Form->end('GO',array('div'=>false, 'label'=>false));
+		echo "<br />";
+*/
+
+		echo "<img src='/img/basic/question/question_48.png' style='vertical-align:middle;'/><span style='font-size:25px;'>PERSONALITY QUESTION</span><br /><br />";
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 80, 1)
+			)
+		    );
+		echo "<div id='tutorial1'>";
+		echo "<ul>";
+		echo "<li>";
+		echo $this->Form->input('avator',
+					array(
+						'type'=>'radio',
+						'options'=>array(
+							" I am a communicator. I like to communicate with people, and feel good about people being happy, charmed and enlightened by talking with me.",
+							" I am a leader-type person. I like to win a game and make a decision with responsibilities.",
+							" I am a compassionate person. I like to listen to people and do the right thing.",
+							" I am an aggressive person. I do my best to get what I want and I like to make an action.",
+							" I am an encourager. I like to help people to come togather and am good at getting along with stranger.",
+							" I am a knowlege seeker. I like to think deeply and solve problems.",
+							" I am a creative person. I like to make new things, or do something about art and music.",
+						),
+						'legend'=>false,
+						'div'=>false,
+						'label'=>false,
+						'separator'=>'</li><li>',
+						'value'=>'0'
+					)
+				   );
+		echo "</li>";
+		echo "</ul>";
+		echo "</div>";
+		echo $this->Form->submit('submit');
+		echo $this->Form->end();
+		break;
+
+	case 81:
+		echo "<div style='font-weight: bold; font-size: 24px;'>Your type: </div><br />";
+		echo "<table><tr>";
+		echo "<td rowspan=2><img src='".$avators['MasterAvator']['url96']."'/></td>";
+		echo "<td>".$avators['MasterAvator']['name'].".</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".$avators['MasterAvator']['type_title'].".</td>";
+		echo "</tr></table>";
+		break;
+
+	case 90:
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo h($topics[0]['Topic']['body']);
+			echo "</div>";
+		echo "</div>";
+		//echo $this->Form->create('Comment', array('controller'=>'comments', 'action' => 'add'));
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 90, 1)
+			)
+		    );
+		echo $this->Form->hidden('topic_id',array('value'=>'1'));
+		echo $this->Form->textarea('body', array('cols'=>'50', 'rows'=>'6', 'style'=>'font-size:180%; width:100%;'));
+		echo $this->Form->end(' POST ');
+/*
+		foreach($comments as $comdata){
+			echo "<div class='comment'>";
+				echo "<div class='comment_pic'>".$html->image($comdata['User']['Master_avators']['url48'])."</div>";
+				echo "<div class='comment_body'>";
+					echo "<div class='comment_text'>".h($comdata['User']['username'])."</div>";
+					echo "<div class='comment_text'>";
+						echo h($comdata['Comment']['body']);
+						echo "　";
+						echo h($comdata['Topic']['title']);
+					echo "</div>";
+				echo "</div>";
+			echo "</div>";
+			echo "<div style='clear:both'></div>";
+		}
+*/
+		echo "<br /><br />";
+
+		break;
+	case 100:
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo h($topics[0]['Topic']['body']);
+			echo "</div>";
+		echo "</div>";
+
+		break;
+
+}
+
+//show the comment line
+if($phase == 20 || $phase == 90 || $phase == 100){
+	foreach($comments as $comdata){
+		echo "<div class='comment'>";
+			echo "<div class='comment_pic'>".$html->image($comdata['User']['Master_avators']['url48'])."</div>";
+			echo "<div class='comment_body'>";
+				echo "<div class='comment_text'>".h($comdata['User']['username'])."</div>";
+				echo "<div class='comment_text'>";
+					echo h($comdata['Comment']['body']);
+				echo "</div>";
+			echo "</div>";
+		echo "</div>";
+		echo "<div style='clear:both'></div>";
+	}
+
+}
+
+//show the time line
+if($phase == 40){
+		echo "<table>";
+	foreach($comments as $topic){
+			echo "<tr><td rowspan=4>";
+				echo $this->Html->image(h($topic['User']['Master_avators']['url48']));
+			echo "</td></tr>";
+			echo "<tr><td>";
+				echo h($topic['User']['username']);
+			echo "</td>";
+			echo "<td>";
+				//echo $this->NiceNumber->getNiceTime(h($topic['Comment']['created']));
+			echo "</td></tr>";
+			echo "<tr><td colspan=2>";
+				echo h($topic['Comment']['body']);
+			echo "</td></tr>";
+			echo "<tr><td colspan=2>";
+				echo h($topic['Topic']['title']);
+			echo "</td></tr>";
+	}
+		echo "</table>";
+}
+	
+
+/*
+$tm = in_array(3,$user_list);
+echo "VIEW on the HOME bottom!!<BR>";
+echo "<PRE>";
+var_dump($user_list);
+echo "</PRE>";
+*/
+
+
+?>
+

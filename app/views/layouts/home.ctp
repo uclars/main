@@ -2,75 +2,160 @@
 <?php $auth = $this->Session->read('Auth.User'); ?>
 <head>
 	<?php echo $html->charset()."\n"; ?>
-	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<title>Whisprr <?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : '';?></title>
 	<?php echo $html->meta('icon')."\n"; ?>
-	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
+	<link rel="shortcut icon" href="/favicon.ico" />
 	<?php echo $html->css('style')."\n"; ?>
 	<?php echo $scripts_for_layout."\n"; ?>
+	<!--[if IE 5.5000 | IE 6]>
+	<style type="text/css">
+		.ail { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/basic/park/park_192.png', sizingMethod=scale); width:192px; height:192px; }
+		.ail img { display: none; }
+	</style>
+	<![endif]-->
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-27637475-1']);
+	  _gaq.push(['_setDomainName', 'whisprr.com']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
 </head>
 <body>
-<div id="container">
-<!--		<h2>Join the information party, Express the best of you!</h2>  -->
-	<div class="header-wrapper" style="margin:0px auto 0px auto;">
-		<div style="width:auto; margin:0px auto 0px auto; text-align:left; padding:0px;">
-			<div class="logo"><a href="/">YouXpress</a></div>
-			<div class="float-right"> 
-				<?php  if(!empty($auth)): ?>
-					<div class="float-left right-margin" style="margin-top:3px;">
-						<?php echo($html->link('follow', array('controller'=>'topics', 'action'=>'index'))); ?>
-						Welocome! <?php echo($html->link(h($auth['username']),array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
-						&nbsp;&nbsp;
-						<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
-					</div>
-				<?php  else: ?>
-                                        <div class="float-left right-margin" style="margin-top:3px;">
-						<?php echo $facebook->login(); ?>
-                                                &nbsp;&nbsp;
-                                        </div>
-				<?php  endif; ?>
+	<div id="header"><div id="header_wrapper"><div id="logo"><h1><a href="/">Whisprr</a></h1></div>
+	<!---------------------------------------------------------------------------------->
+	<?php //if "invite" is on, show the invite top page ?>
+	<?php $auth = $this->Session->read('Auth.User'); ?>
+	<?php $invite_session = $this->Session->read('invite'); ?>
+	<?php //if(empty($auth)&&SHOW_INVITE==true): ?>
+	<?php if(SHOW_INVITE==true&&empty($invite_session)&&empty($auth)): ?>
+	</div>
+	</div>
+	<div id="wrapper">
+		<div id="head_wrapper">
+			<div id="headline">
+				<h1><span style='color:#f7376b'>Lovely</span> Story Board</h1>
+				<h2>For your private time ♪ </h2>
+			</div>
+			<div id="head_pic">
+				<!--    service description video -->
 			</div>
 		</div>
 	</div>
-
-	<div id="content">
+	<div>notice: This is α  version. Id, topics and comments may be deleted in the future.</div>
+	<div id="first_top_wrapper">
+		<div id="first_top_login">
+			<h3>Returning Users</h3>
+			<p>Facebook login</p>
+			<?php echo $facebook->login(array('scope'=>'email, user_birthday')); ?>
+		</div>
+		<div id="first_top_invitation">
+			<h3>New Users</h3>
+			<?php
+				echo $form->create('InviteCodes',array('action'=>'index','type'=>'post'));
+				echo "<p>";
+				echo $form->label('Invite', 'Invite code');
+				echo "</p>";
+				echo $form->text('Invite.code');
+				echo $form->end(array('label'=>'SEND','name'=>'submitButton','div'=>array('class'=>'submitDiv')));
+			?>
+		</div>
+	</div>
+	<!---------------------------------------------------------------------------------->
+	<?php //if "invite" is off, show the main page ?>
+	<?php else: ?>
+		<div id="header_nav">
+			<?php if(empty($auth)){ ?>
+				<?php echo $facebook->login(array('scope'=>'email, user_birthday')); ?>
+			<?php }else{ ?>
+				<table><tr><td>
+					<?php
+						//if URL is /, show the like button
+						if($html->url() == "/"){
+							echo $facebook->like(array('layout'=>'button_count')); 
+						}
+					?>
+				</td><td>
+					<img src="/img/basic/chair/chair_32.png" />
+				</td><td>
+					<?php echo($html->link('home', array('controller'=>'home',  'action'=>'index'))); ?>
+				</td><td>
+					<img src="/img/basic/casual_woman/casual_woman_32.png" />
+				</td><td>
+					<?php echo($html->link('profile', array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
+				</td><td>
+					<img src="/img/basic/leaves_32.png" />
+				</td><td>
+					<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
+				</td></tr></table>
+			<?php  } ?>
+		</div>
+	</div></div>
+	<div id="wrapper">
+		<div id="head_wrapper">
+			<div id="headline">
+				<h1><span style='color:#f7376b'>Lovely</span> Story Board</h1>
+				<h2>For your private time ♪ </h2>
+			</div>
+			<div id="head_pic">
+				<?php echo $html->link($html->image("basic/cat1_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>1),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat2_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>2),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat3_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>3),array('escape' => false),false); ?>
+				<br />
+				<?php echo $html->link($html->image("basic/cat4_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>4),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat5_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>5),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("/img/basic/park/park_192_words.png", array('width'=>96,'height'=>96)),array('controller'=>'topics',  'action'=>'create'),array('escape' => false),false); ?>
+			</div>
+			<div class="nav">
+				<ul class="nl clearFix">
+					<?php  if($this->action == 'index'): ?>
+					<li class="active"><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+					<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+					<li><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+					<?php elseif($this->action == 'newtopics'): ?>
+					<li><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+					<li class="active"><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+					<li><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+					<?php elseif($this->action == 'mytopics'): ?>
+					<li><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+					<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+					<li class="active"><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+					<?php endif; ?>
+				</ul>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div id="content">
+	<!---------------------------------------------------------------------------------->
 <!-- START content -->
 <?php
-	$session->flash();
-	echo $content_for_layout."\n";
+       $session->flash();
+       echo $content_for_layout."\n";
+
 ?>
 <!-- END content -->
+		</div>
+		<div id="navigation_wrapper">
+			<div id="navigation">
+				<!--<img src='/img/basic/park/park_192_words.png' wight=200 height=200/>-->
+			</div>
+			<div id="navigation">
+				<div class=ntitle>Top Rank Topics</div>
+					<?php echo $this->element('home_ranking'); ?>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<?php echo $html->link('Copyright 2012 Whisprr', 'http://whisprr.com/', array('target'=>'_blank'), null, false)."\n"; ?>
+		</div>
 	</div>
-	<div id="footer">
-			<?php echo $html->link('Copyright 2011 YouXpress', 'http://www.youxpress.com/', array('target'=>'_blank'), null, false)."\n"; ?>
-	</div>
-</div>
-<?php if (Configure::read('debug') > 0): ?>
-<!-- START debug -->
-<?php echo $cakeDebug."\n"; ?>
-<?php if (Configure::read('debug') == 3): ?>
-<div id="cookieDump">
-	<h2>Cookie dump:</h2>
-	<pre><?php
-		ob_start();
-		var_dump($_COOKIE);
-		$text = ob_get_contents();
-		ob_end_clean();
-		echo h($text);
-	?></pre>
-</div>
-<div id="sessionDump">
-	<h2>Session dump:</h2>
-	<pre><?php
-		ob_start();
-		var_dump($_SESSION);
-		$text = ob_get_contents();
-		ob_end_clean();
-		echo h($text);
-	?></pre>
-</div>
-<?php endif; ?>
-<!-- END debug -->
-<?php endif; ?>
-<?= $facebook->init(); ?>
+	<?php  endif; ?>
+	<?= $facebook->init(); ?>
 </body>
 </html>

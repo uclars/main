@@ -1,0 +1,19 @@
+<head>
+	<?php echo $html->charset()."\n"; ?>
+	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<?php echo $html->meta('icon')."\n"; ?>
+	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
+	<?php echo $html->css('style')."\n"; ?>
+	<?php echo $scripts_for_layout."\n"; ?>
+</head>
+<body>
+<div id="container">
+<!-- START content -->
+<?php
+	$session->flash();
+	echo $content_for_layout."\n";
+?>
+<!-- END content -->
+</div>
+</body>
+</html>

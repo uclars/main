@@ -2,85 +2,94 @@
 <?php $auth = $this->Session->read('Auth.User'); ?>
 <head>
 	<?php echo $html->charset()."\n"; ?>
-	<title>YouXpress<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<title>Whisprr<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
 	<?php echo $html->meta('icon')."\n"; ?>
-	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
 	<?php echo $html->css('style')."\n"; ?>
 	<?php echo $scripts_for_layout."\n"; ?>
+	<script>
+		//focus when page load
+		function sf(){document.f.q.focus()}
+	</script>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-27637475-1']);
+	  _gaq.push(['_setDomainName', 'whisprr.com']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+</script>
 </head>
-<body>
+<body onload="sf();">
+
+
+<?php //var_dump($auth); ?>
+
+
 <div id="container">
-<!--		<h2>Join the information party, Express the best of you!</h2>  -->
-	<div class="header-wrapper" style="margin:0px auto 0px auto;">
-		<div style="width:auto; margin:0px auto 0px auto; text-align:left; padding:0px;">
-			<div class="logo"><a href="/">YouXpress</a></div>
-			<div class="float-right"> 
-				<?php  if(!empty($auth)): ?>
-					<div class="float-left right-margin" style="margin-top:3px;">
-						<?php
-							///show the follow link for phase 10
-							if($phase==10){
-								echo ($html->link('follows',array('controller'=>'tutorials',  'action'=>'phase', 10, 1)));
-							}
-							if($phase<=60){
-								echo " Welcome! newuser ";
-							}
-							else{
-								echo " Welcome! ".$auth['username'];
-							}
-						?>
-						&nbsp;&nbsp;
+	<div id="header">
+		<div id="header_wrapper">
+			<div id="logo">
+				<h1><a href="/">Whisprr</a></h1>
+			</div>
+			<div id="header_nav">
+				<?php if(!empty($auth)){ ?>
+					<table><tr><td>
+						<img src="/img/basic/leaves_32.png" />
+					</td><td>
 						<?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
-					</div>
-				<?php  else: ?>
-                                        <div class="float-left right-margin" style="margin-top:3px;">
-						<?php echo $facebook->login(); ?>
-                                                &nbsp;&nbsp;
-                                        </div>
-				<?php  endif; ?>
+					</td></tr></table>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
-
-	<div id="content">
+	<div id="wrapper">
+		<div class="nav">
+			<ul class="nl clearFix">
+<?php
+			if($phase==10){
+?>
+				<li class="active"><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+				<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+				<li><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+<?php
+			}
+			elseif($phase==30){
+?>
+				<li><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+				<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+				<li class="active"><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+<?php
+			}
+?>
+			</ul>
+		</div>
+		<div style="clear:both"></div>
+		<div id="content">
 <!-- START content -->
 <?php
 	$session->flash();
 	echo $content_for_layout."\n";
 ?>
 <!-- END content -->
+		</div>
+       		<div id="navigation_wrapper">
+                        <div id="navigation">
+<?php
+				echo $this->element('tutorial_description');
+?>
+                        </div>
+        	</div>
 	</div>
-	<div id="footer">
-			<?php echo $html->link('Copyright 2011 YouXpress', 'http://www.youxpress.com/', array('target'=>'_blank'), null, false)."\n"; ?>
+	<div id="footer"> 
+		<?php echo $html->link('Copyright 2011 Whisprr', 'http://whisprr.com/', array('target'=>'_blank'), null, false)."\n"; ?>
 	</div>
 </div>
-<?php if (Configure::read('debug') > 0): ?>
-<!-- START debug -->
-<?php echo $cakeDebug."\n"; ?>
-<?php if (Configure::read('debug') == 3): ?>
-<div id="cookieDump">
-	<h2>Cookie dump:</h2>
-	<pre><?php
-		ob_start();
-		var_dump($_COOKIE);
-		$text = ob_get_contents();
-		ob_end_clean();
-		echo h($text);
-	?></pre>
-</div>
-<div id="sessionDump">
-	<h2>Session dump:</h2>
-	<pre><?php
-		ob_start();
-		var_dump($_SESSION);
-		$text = ob_get_contents();
-		ob_end_clean();
-		echo h($text);
-	?></pre>
-</div>
-<?php endif; ?>
-<!-- END debug -->
-<?php endif; ?>
 <?= $facebook->init(); ?>
 </body>
 </html>

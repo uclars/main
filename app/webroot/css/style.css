@@ -1,289 +1,736 @@
-body
-{
-	margin: 0;
-	padding: 0;
-	background: #FFF;
-	color: #000;
-	font-family: arial, verdana, tahoma, times new roman;
-	font-size: 80%;
+*{
+	margin:0;
+	padding:0;
+}
+
+html,body{
+	background: #fafafa;
+	/*background-image:url("../img/basic/bluedot.gif");*/
+	color: #333;
+	/*font-family: Meiryo, arial, verdana, tahoma, times new roman;*/
+	font-family: M'Lucida Sans Unicode', Arial, Helvetica, sans-serif;
+	font-size: 95%;
+	text-align:center;
+	line-height: 1.3em;
+}
+
+p{
+	margin:0 10px 10px
+}
+
+h3{
+	font-family: Meiryo, arial, verdana, tahoma, times new roman;
+	color: #333;
+	font-size: 150%
 }
 
 a
 {
-	text-decoration: none;
-	color: #f7376b;
+        text-decoration: none;
+        color: #f7376b;
 }
 
 a:hover
+{
+        text-decoration: none;
+        color: #ff9900;
+}
+
+img
+{
+        border: 0;
+}
+
+ul{
+	padding:10px 5px 10px 30px;
+}
+
+/* LAYOUT */
+div#container
+{
+        margin: 0 auto;
+        width: 100%; // change this to what ever percentage you like if you want a liquid layout or if you want a fixed size use for example 800px
+}
+
+
+/* HEADER */
+div#header{
+	width:auto;
+	background: #0096ea;
+	height:36px;
+	text-align:center;
+	font-family:Lucida Grande,Arial,sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	border-bottom: 2px solid #FaFaFa;
+	/*margin:0px auto 10px auto;*/
+}
+
+div#header_wrapper{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 750px;
+}
+
+div#logo{
+	float: left;
+}
+
+div#header_nav{
+	float: right;
+}
+
+div#header_wrapper h1{
+	font-size:150%;
+	color: #FaFaFa;
+	font-weight:bold;
+	/*background: #998195;*/
+	background:#0096ea;
+	margin:5px 0px 0px 0px;
+	padding: 0px;
+	/*float: left;*/
+}
+
+div#header_wrapper h3{
+	font-size:100%;
+	color: #B9CAFF;
+	background: #998195;
+	margin:5px 0px 0px 0px;
+	padding: 0px;
+	float: right;
+}
+
+div#header_wrapper a{
+	color: #FaFaFa;
+	font-weight: bold;
+}
+
+div#wrapper{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	width: 750px;
+}
+
+div#head_wrapper{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	width: 750px;
+}
+
+div#headline{
+	background: #fafafa;
+	float:left;
+	width:400px;
+	height: 230px;
+	border-style: hidden hidden solid hidden;
+	border-width: 0px 0px 5px 0px; 
+	border-color: #333333;
+	margin:0px 0px 20px 0px;
+	text-align: left;
+	font-weight: bold;
+}
+
+div#headline h1{
+	padding: 40px 0px 20px 20px; 
+	font-size:200%;
+	color:#0096ae;
+}
+
+div#headline h2{
+	padding: 0px 0px 10px 20px;
+	font-size:125%;
+	color:#0096ae;
+}
+
+div#head_pic{
+	background: #fafafa;
+	float:right;
+	width:350px;
+	height: 230px;
+	border-style: hidden hidden solid hidden;
+	border-width: 0px 0px 5px 0px; 
+	border-color: #333;
+	margin:0px 0px 20px 0px;
+	text-align: center;
+	font-weight: bold;
+}
+
+div#head_pic img{
+	border: 0;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+/* First Top Page */
+div#first_top_wrapper{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	width: 750px;
+}
+
+div#first_top_wrapper h3{
+	padding: 0px 0px 20px 0px;
+	color: #333;
+}
+
+div#first_top_wrapper p{
+	padding: 0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+	font-weight:normal;
+	line-height:2.0;
+}
+
+div#first_top_login{
+	background: #fafafa;
+	float:left;
+	width:375px;
+	height: 210px;
+	margin:30px 0px 20px 0px;
+	text-align: left;
+	font-weight: bold;
+}
+
+div#first_top_invitation{
+	background: #fafafa;
+	float:right;
+	width:375px;
+	height: 210px;
+	margin:30px 0px 20px 0px;
+	text-align: left;
+	font-weight: bold;
+}
+
+
+/* content */
+div#content{
+	background: #FaFaFa;
+	float:left;
+	width: 500px;
+	text-align: left;
+}
+
+div#content p{
+	line-height:1.4
+}
+
+div#content a
+{
+	text-decoration: none;
+	vertical-align: top;
+	color: #f7376b;
+}
+
+div#content a:hover
 {
 	text-decoration: none;
 	color: #ff9900;
 }
 
-img
+div#content .num
 {
-	border: 0;
+	vertical-align: top;
 }
 
-#container
+div#content #topictitle
 {
-	margin: 0 auto;
-	width: 800px; // change this to what ever percentage you like if you want a liquid layout or if you want a fixed size use for example 800px
+	margin:0 0 0 5px;
+	font-size:150%;
+	font-weight:bold;
+	vertical-align: top;
 }
 
-#image
+
+/* Tutorial */
+div#tutorial0
 {
-	width: auto;
-	height: 40px;
-//	background: #0096ae url('/img/image-back.png') repeat-x;
-	background: #0096ae url('/img/blue_back.png') repeat-x;
+	background: url(../img/basic/tutorial0.png) no-repeat top;
+	width:750px;
+	height:300px;
 }
 
-#image h1
+div#tutorial0 #facebook
 {
-	margin: 0;
-	padding: 40px 30px 10px 0;
-	color: #FFF;
+	float: right;
+	text-align: right;
+	margin:100px 80px 0 0px;
+}
+
+div#tutorial1 ul
+{
+	margin:5px 0 10 0;
+	list-style-type:none;
+	list-style-position:inside;
+}
+
+div#tutorial1 li
+{
+	margin:10px 0 0 0;
+	padding-left:1em;
+}
+
+/* PROFILE */
+div#profile_wrapper{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	width: 500px;
+}
+
+div#profile_comments{
+	background: #fafafa;
+	float:left;
+	width:350px;
+	border-style: hidden hidden solid hidden;
+	border-width: 0px 0px 0px 0px; 
+	border-color: #333333;
+	margin:0px 0px 0px 0px;
 	text-align: left;
-	letter-spacing: 0px;
-	font-size: 120%;
 	font-weight: bold;
 }
 
-#image h2
-{
-	margin: -8px 0 0 0;
-	padding: 0px 17px 0 0;
-	color: #EAEFDA;
-	text-align: right;
-	letter-spacing: 1px;
-	font-size: 175%;
-	font-weight: normal;
+div#profile_desc{
+	background: #fafafa;
+	float:right;
+	width:145px;
+	border-style: hidden hidden hidden solid;
+	border-width: 0px 0px 0px 1px; 
+	border-color: #aaa;
+	margin:5px 0px 0px 0px;
+	text-align: left;
 }
 
-#image h3
-{
-        //margin: -120px;
-        padding: 0px 5px 0 0;
-        color: #EAEFDA;
-        text-align: right;
-        letter-spacing: 1px;
-        font-size: 120%;
-        font-weight: normal;
+
+/* TOPIC */
+.topic{
+	width: 100%;
+	padding: 0 0 10px 0;
 }
-#image a
+
+.topic a
 {
         text-decoration: none;
-        color: #fff;
+	font-size: 20px;
+        color: #f7376b;
 }
 
-/* HEADER */
-
-.header-wrapper
+.topic a:hover
 {
-	width:auto;
-	background: #0096ae;
-	height:36px; 
-	text-align:right; 
-	font-family:Lucida Grande,Arial,sans-serif; 
-	font-size:13px; 
-	font-weight:bold;
-	border-bottom: 2px solid #FFFFFF;
-	margin:0px auto 10px auto;
-	
+        text-decoration: none;
+        color: #ff9900;
 }
 
-
-.logo
-{
-        font-size:150%;
-	color: #FFF;
-        font-weight:bold;
-	background: #0096ae;
-	margin:5px 0px 0px 15px;
-	padding: 0px;
+.topic .topic_pic{
 	float: left;
-	
-}
-
-.logo a
-{
-	color:#FFF
-}
-
-.step-button
-{
-	margin:0 0 0 90px;
-}
-
-.top-margin
-{
-	margin-top:10px;
-}
-
-.bottom-margin
-{
-	margin-bottom:10px;
-}
-.left-margin
-{
-	margin-left:10px;	
-}
-
-.right-margin
-{
-	margin-right:10px;	
-}
-
-.right-margin-small
-{
-	margin-right:5px;
-	
-}
-
-.float-left
-{
-	float:left;
-	display:inline;
-}
-
-.float-right
-{
-	float:right;
-	display:inline;
-}
-
-/* main line */
-/* user icon */
-div.mainline {
-	margin-bottom: 10px;
-	padding-bottom: 10px;
-	_padding-left: 30px;
-	border-bottom: 1px dotted #cccccc;
-}
-div.mainline div.userico {
-	padding-right: 20px
-}
-div.mailine div.contents {
-	overflow: hidden;
-}
-div.mainline div.textdata {
-	line-height: 1.7;
-	color: #333333;
-}
-
-#menu {
-  position: absolute;
-  top: 22px;
-  left: 180px; }
-#menu li {
-  list-style-type: none;
-  float: left;
-  margin-left: 20px; }
-#menu li a {
-  font-size: 110%; }
-
-#nav {
-  position: absolute;
-  top: 20px;
-  left: 85%; }
-#nav li {
-  list-style-type: none;
-  float: left; }
-
-
-
-
-
-#content
-{
-	width: auto;
-	height: auto;
-	background: #FFF;
-	padding: 15px;
-	line-height: 160%;
-}
-
-#content h2
-{
-	padding: 0 0 5px 0;
-	margin: 0 0 10px 0;
-	font-size: 140%;
-	letter-spacing: -1px;
-	font-weight: normal;
-	color: #e47a1a;
-	border-bottom: 1px solid #ff9900; 
-}
-
-#content p
-{
-	margin: 0 0 15px 0;
-	padding: 0;
-}
-
-#content img
-{
-	float: left;
-	border: 1px solid #CCC;
-	padding: 5px;
-	margin: 0 0 0 15px;
-}
-
-#footer
-{
-	width: auto;
-	height: 35px;
-	background: #0096ae;
-	border-top: 3px solid #998195;
-	color: #B6C879;
-}
-
-#footerleft
-{
-	float: left;
-	width: 60%; // change this percentage to fit any text in either footer div - the below will auto change (width: auto)
 	text-align: left;
-	padding: 1% 2%;
+	width: 100;
 }
 
-#footerleft a
-{
-	text-decoration: none;
-	color: #32707a;
-	margin: 0 5px;
-}
-
-#footerleft #nomarginleft
-{
-	margin: 0 10px 0 0;
-	letter-spacing: -1px;
-}
-
-#footerright
-{
+.topic .topic_content{
 	float: right;
-	width: auto;
+	text-align: left;
+	width: 400;
+}
+
+.topic .topic_content_me{
+	float: right;
+	text-align: left;
+	background-color: #C6D5FD;
+	width: 400;
+}
+
+.topic .topic_title{
+	vertical-align: top;
+	font-size: 130%;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+	color: #333;
+}
+
+.topic .topic_social{
+	vertical-align: bottom;
+}
+
+.topic .topic_body{
+	clear: both;
+	border-top: 2px solid #FaFaFa;
+	color: #333;
+}
+
+.topic .topic_owner{
+	clear: both;
 	text-align: right;
-	padding: 1% 2%;
+	margin: 0 10px 0 0;
 }
 
 
-#footer p
-{
-	margin: 0;
+/* COMMENT */
+.comment{
+	width: 100%;
+	margin: 15px 0 0 0;
+}
+
+.comment .comment_pic{
+	clear: both;
+	float: left;
+	text-align: left;
+	width: 70px;
+}
+
+.comment .comment_pic img{
+	border: 0;
+	border-style:solid;
+}
+
+.comment .comment_body{
+	float: right;
+	text-align: left;
+	width: 430px;
+}
+
+.comment .comment_tutorial_body{
+	float: right;
+	text-align: left;
+	width: 280px;
+}
+
+.comment .comment_body_me{
+	float: right;
+	text-align: left;
+	background-color: #C6D5FD;
+	width: 430px;
+}
+
+.comment .comment_following{
+	float: right;
+	text-align: left;
+	width: 430px;
+        font-size: 85%;
+	color:#333;
+}
+
+.comment .comment_name{
+	float: right;
+	text-align: left;
+	margin:0px 0px 10px 0px;
+	width: 430px;
+	color:#004b75;
+}
+
+.comment .comment_text{
+	float: right;
+	text-align: left;
+	width: 430px;
+	color:#333;
+}
+
+.comment .comment_tutorial_text{
+	float: right;
+	text-align: left;
+	width: 280px;
+	margin-top: 3px;
+	color:#333;
+	font-weight: normal;
+}
+
+/*NAVIGATION*/
+pre{
+	margin:0 10px 10px;
+	font-family: arial, verdana, tahoma, times new roman;
+        font-size: 95%;
+	text-align : left;
+	white-space: pre;           /* CSS 2.0 */
+	white-space: pre-wrap;      /* CSS 2.1 */
+	white-space: pre-line;      /* CSS 3.0 */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap;  /* HP Printers */
+	word-wrap: break-word;      /* IE 5+ */
+}
+
+div#navigation_wrapper{
+	background:#fafafa;
+	float: right;
+	width:250px;
+	/*text-align: left;*/
+	line-height:1.4
+}
+
+div#navigation{
+	background:#fafafa;
+	float: right;
+	width:95%;
+	/*text-align: left;*/
+	margin-bottom: 15px;
+}
+
+div#navigation img{
+	background:#fafafa
+	text-align : center ;
+	margin-left: auto ;
+	margin-right: auto ;
+	/*border: 3px #ff9900 solid*/
+}
+
+div#navigation p{
+        line-height:1.4
+}
+
+div#extra{
+	background:#FF8539
+}
+
+div#footer{
+	height: 20px;
+	background: #333;
+	color: #FaFaFa;
+	clear: both;
+}
+
+div#footer p{
+	margin:0;
+	padding:5px 10px
+}
+
+div#footer a{
+	display:inline;
+	padding:0;
+	color: #C6D5FD
+}
+
+/* --- ナビゲーションバー --- */
+div.nav {
+	float: left;
+	display: inline;
+	width: 100%; /* ナビゲーションの幅 */
+	/*width: 500px;*/ /* ナビゲーションの幅 */
+	padding-top: 0px; /* ナビゲーションの上パディング */
+	background-color: #fafafa; /* ナビゲーションの背景色 */
+	/*border-bottom: 3px #004080 solid; *//* 下境界線 */
+	font-size: 180%;
+}
+
+/* --- メニューエリア --- */
+div.nav ul.nl {
+	width: 99%; /* メニューの幅 */
+	margin: 0 auto; /* メニューのマージン（上下、左右） */
 	padding: 0;
-	letter-spacing: -1px;
-	color: #32707a;
+	list-style-type: none;
+	text-align: center;
 }
 
-#footer a
-{
+/* --- メニュー項目 --- */
+div.nav ul.nl li {
+	width: 5em; /* タブの幅 */
+	margin-right: 4px; /* タブの右マージン */
+	background: #f9f9f9 url(../img/tabs/tab_gen1_left.gif) no-repeat left top; /* タブの背景（左） */
+	border-bottom: 1px solid #aaa;
+	float: left;
+	font-size: 90%;
+}
+
+/* --- リンク --- */
+div.nav ul.nl li a {
+	display: block;
+	position: relative; /* IE6用 */
+	padding: 6px 2px 5px; /* リンクエリアのパディング（上、左右、下） */
+	background: url(../img/tabs/tab_gen1_right.gif) no-repeat right top; /* タブの背景（右） */
+	text-decoration: none; /* テキストの下線（なし） */
+	color: #aaa; /* タブの文字色 */
+	font-size: 90%;
+}
+/* --- ポイント時の設定 --- */
+div.nav ul.nl li a:hover {
 	text-decoration: none;
-	color: #f7376b;
 }
 
-#footer a:hover
-{
-	text-decoration: underline;
-	color: #f7376b;
+/* --- アクティブなタブ --- */
+div.nav ul.nl li.active {
+	/*background: #004080 url(../img/tabs/tab_act_left.png) no-repeat left top;*/ /* タブの背景（左） */
+	width: 5em; /* タブの幅 */
+	margin-right: 4px; /* タブの右マージン */
+	background: #f9f9f9 url(../img/tabs/tab_gen1_left.gif) no-repeat left top; /* タブの背景（右） */
+	border-bottom: 0px; 
+	color: #222; /* アクティブタブの文字色 */
+	float: left;
 }
+div.nav ul.nl li.active a {
+	/*background: url(../img/tabs/tab_act_right.png) no-repeat right top;*/ /* タブの背景（右） */
+	display: block;
+	position: relative; /* IE6用 */
+	padding: 6px 2px 5px; /* リンクエリアのパディング（上、左右、下） */
+	background: url(../img/tabs/tab_gen1_right.gif) no-repeat right top; /* タブの背景（右） */
+	color: #222; /* アクティブタブの文字色 */
+	text-decoration: none;
+}
+
+/* --- clearfix --- */
+.clearFix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearFix {
+	min-height: 1px;
+}
+
+/* CLASS */
+.ntitle{
+	font-size : 150%;
+	color: #fafafa;
+	font-weight: bold;
+	margin-bottom: 10px; /* マージン */
+	/*background-color: #95ea00;*/
+	background-color: #004b75;
+	/*
+	border-top: 2px #95ea00 dashed;
+	border-bottom: 2px #95ea00 dashed;
+	*/
+	text-align : center;
+}
+
+.createtopic {
+	font-size : 170%;
+	font-weight: bold;
+	margin-bottom: 10px; /* マージン */
+	background-color: #fafafa;
+	text-align : center;
+}
+
+/* ============================================================================================================================
+== BUBBLE WITH A BORDER AND TRIANGLE
+** ============================================================================================================================ */
+
+/* THE SPEECH BUBBLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-border {
+	position:relative;
+	padding:15px;
+	margin:1em 0 3em;
+	border:5px solid #5a8f00;
+	color:#333;
+	background:#fafafa;
+	/* css3 */
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
+
+/* Variant : for left positioned triangle
+------------------------------------------ */
+
+.triangle-border.left {
+	margin-left:30px;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-border.right {
+	margin-right:30px;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-border:before {
+	content:"";
+	position:absolute;
+	bottom:-20px; /* value = - border-top-width - border-bottom-width */
+	left:40px; /* controls horizontal position */
+    border-width:20px 20px 0;
+	border-style:solid;
+    border-color:#5a8f00 transparent;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+/* creates the smaller  triangle */
+.triangle-border:after {
+	content:"";
+	position:absolute;
+	bottom:-13px; /* value = - border-top-width - border-bottom-width */
+	left:47px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+	border-width:13px 13px 0;
+	border-style:solid;
+	border-color:#fafafa transparent;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+/* Variant : top
+------------------------------------------ */
+
+/* creates the larger triangle */
+.triangle-border.top:before {
+	top:-20px; /* value = - border-top-width - border-bottom-width */
+	bottom:auto;
+	left:auto;
+	right:40px; /* controls horizontal position */
+    border-width:0 20px 20px;
+}
+
+/* creates the smaller  triangle */
+.triangle-border.top:after {
+	top:-13px; /* value = - border-top-width - border-bottom-width */
+	bottom:auto;
+	left:auto;
+	right:47px; /* value = (:before right) + (:before border-right) - (:after border-right) */
+    border-width:0 13px 13px;
+}
+
+/* Variant : left
+------------------------------------------ */
+
+/* creates the larger triangle */
+.triangle-border.left:before {
+	top:10px; /* controls vertical position */
+	bottom:auto;
+	left:-30px; /* value = - border-left-width - border-right-width */
+	border-width:15px 30px 15px 0;
+	border-color:transparent #5a8f00;
+}
+
+/* creates the smaller  triangle */
+.triangle-border.left:after {
+	top:16px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+	bottom:auto;
+	left:-21px; /* value = - border-left-width - border-right-width */
+	border-width:9px 21px 9px 0;
+	border-color:transparent #fff;
+}
+
+/* Variant : right
+------------------------------------------ */
+
+/* creates the larger triangle */
+.triangle-border.right:before {
+	top:10px; /* controls vertical position */
+	bottom:auto;
+    left:auto;
+	right:-30px; /* value = - border-left-width - border-right-width */
+	border-width:15px 0 15px 30px;
+	border-color:transparent #5a8f00;
+}
+
+/* creates the smaller  triangle */
+.triangle-border.right:after {
+	top:16px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+	bottom:auto;
+    left:auto;
+	right:-21px; /* value = - border-left-width - border-right-width */
+	border-width:9px 0 9px 21px;
+	border-color:transparent #fff;
+}
+

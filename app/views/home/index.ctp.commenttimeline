@@ -1,0 +1,60 @@
+<br />
+<?php /*if(!empty($auth)): ?>
+<?php echo $this->Form->create('Topic', array('action' => 'add')); ?>
+<p><?php echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;')) ?>
+<?php echo $this->Form->end('GO') ?></p>
+</form>
+<?php endif; */?>
+
+<?php
+foreach($topics as $hottopic) {
+?>
+<?php
+	echo $html->link(h($hottopic['Topic']['title']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$hottopic['Topic']['id']));
+?>
+<?php 
+	///if there is number, show the nnum. if there is no number, show 0
+	if(!empty($hottopic['Comment_topics']['count'])){
+		echo h($hottopic['Comment_topics']['count']);
+	}
+	else{
+		echo "0";
+	}
+
+;?>
+<?php echo "<BR>";?>
+<?php
+}
+?>
+
+<?php
+foreach($timelines as $timeline) { 
+?>
+
+<p>
+<?php
+	echo $this->Html->image(h($timeline['User']['profile_img']));
+	/*
+	echo $this->Html->image(h($topic['User']['profile_img']), array(
+			'alt' => 'tavivit',
+			'width' => '50px'
+		)); 
+	*/
+?>
+	<?php echo $html->link(h($timeline['User']['username']), array('controller'=>'users', 'action'=>'show_users', 'id'=>$timeline['Comment']['user_id'])); ?>
+	<?php echo $this->NiceNumber->getNiceTime(h($timeline['Comment']['created'])); ?>
+<?php 
+	echo h($timeline['Comment']['body']); 
+?>
+<?php
+	echo $html->link(h($timeline['Topic']['title']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$timeline['Topic']['id']));
+?>
+</p>
+<?php 
+} 
+
+
+echo $paginator->prev('<< '.__('previous', true), array(), ' ', array('class'=>'disabled'));
+echo $paginator->numbers();
+echo $paginator->next(__('next', true).' >>', array(), ' ', array('class'=>'disabled'))
+?>

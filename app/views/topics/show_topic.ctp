@@ -1,50 +1,135 @@
 <?php
-foreach($topics as $tpdata){
 	$me_array = $this->Session->read('Auth.User');
 	$me = $me_array['id'];
 
-	echo $tpdata['Topic']['title'];
-
-
-	///when you already following the topic you are selecting, show 'unfollow', if you haven't followed yet, show 'follow'
-	if(in_array($tpdata['Topic']['id'],$following_topic_list)){
-		echo "　　".$html->link('unfollow', array('controller'=>'followings', 'action'=>'action', 'do'=>'unfollow_topic', 'id'=>$tpdata['Topic']['id']));
+	///topic owner info
+	if(!empty($topic_user_pic)){
+		$owner_avator = $topic_user_pic[0]['Master_avators']['url24'];
+		$owner_id =  $topic_user_pic[0]['User']['id'];
+		$owner_name =  $topic_user_pic[0]['User']['username'];
 	}
 	else{
-		echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$tpdata['Topic']['id']));
+		$owner_avator = "/img/avator/dogs/shepherd/shepherd_24.png";
+		$owner_id =  0;
+		$owner_name = "unknown";
 	}
-
-	echo "<br /><br />";
-
-	echo $this->Form->create('Comment', array('comments'=>'comments', 'action' => 'add'));
-	echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
-	echo $this->Form->hidden('topic_id',array('value'=>$tpdata['Topic']['id']));
-	echo $this->Form->hidden('user_id',array('value'=>$me));
-	echo $this->Form->end('GO');
-	echo "<br /><br />";
-
-	foreach($comments as $comdata){
-		echo $html->link($comdata['User']['username'], array('controller'=>'users', 'action'=>'show_users', 'id'=>$comdata['Comment']['user_id']));
-		echo "　";
-		echo $comdata['Comment']['body'];
-		echo "　";
-		echo $html->link('Comment', array(
-			'controller'=>'comments', 
-			'action' => 'add', 
-			'topicid' => $tpdata['Topic']['id'], 
-			'cid'=>$comdata['Comment']['id']
-		));
-		echo "<br />";
-	}
+	
+///////////////////////////////////////////////////
+////////////////    TOPIC   ///////////////////////
+///////////////////////////////////////////////////
+echo "<div class='topic'>";
+	echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+	echo "<div class='topic_content'>";
+		echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+		echo "<div class='topic_social'>";
+	///when you already following the topic you are selecting, show 'unfollow', if you haven't followed yet, show 'follow'
+if(in_array($topics[0]['Topic']['id'],$following_topic_list)){
+	echo $html->link('unfollow this topic', array('controller'=>'followings', 'action'=>'action', 'do'=>'unfollow_topic', 'id'=>$topics[0]['Topic']['id']));
 }
+else{
+	echo $html->link('follow this topic', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$topics[0]['Topic']['id']));
+}
+		//LIKE Button
+		echo "&nbsp;&nbsp;&nbsp;";
+		echo $facebook->like(array('layout'=>'button_count'));
+		echo "</div>";
+	echo "</div>";
+
+	echo "<div class='topic_owner'>".$html->image($owner_avator)." ".$owner_name."</div>";
+	echo "<div class='topic_owner'>"."followers: <b>";
+		if(!empty($topics[0]['Following_topic_numbers']['count'])){echo $topics[0]['Following_topic_numbers']['count'];}else{echo "0";}
+	echo "</b> | comments: <b>";
+		if(!empty($topics[0]['Comment_topics']['Count'])){echo $topics[0]['Comment_topics']['Count'];}else{echo "0";}
+	echo "</b></div>";
+	echo "<br />";
+	echo "<div class='topic_body'>";
+		echo nl2br(h($topics[0]['Topic']['body']));
+	echo "</div>";
+echo "</div>";
+
+echo "<div style='text-align:left; margin-bottom:15px;'></div>";
+echo $this->Form->create('Comment', array('url'=>
+			array('comments'=>'comments', 'action' => 'add'),
+			'name' => 'f'
+		));
+if($me){
+	echo $this->Form->textarea('body', array('cols'=>'50', 'rows'=>'6', 'onkeyup'=>'count(value);', 'style'=>'f
+ont-size:180%; width:100%;'));
+}
+else{
+	echo $this->Form->textarea('body', array('cols'=>'50', 'rows'=>'6', 'value'=>'Login before posting your comment', 'onfocus'=>'this.value=""','onblur'=>'if(this.value=="") this.value="Login before posting your comment"','onkeyup'=>'count(value);', 'style'=>'font-size:180%; width:100%;'));
+}
+echo $this->Form->hidden('topic_id',array('value'=>$topics[0]['Topic']['id']));
+echo $this->Form->hidden('user_id',array('value'=>$me));
+echo "<br />";
+if($me){ ///if not login, doesn't show post button
+	echo $form->submit('/img/basic/post0.png', array('type'=>'submit','name'=>'post','value'=>'post','style'=>'margin-top:10px'));
+}
+else{
+	echo $facebook->login(array('scope'=>'email, user_birthday'));
+}
+//count letters
+echo "<span style='margin-left:15px' id='message_count'>500</span>";
+
+
+//////////////////////////////////////////////////
+//////////    COMMENTS    ////////////////////////
+//////////////////////////////////////////////////
+foreach($comments as $comdata){
+	echo "<div class='comment'>";
+		echo "<div class='comment_pic'>".$html->image($comdata['User']['Master_avators']['url48'])."</div>";
+	if($owner_id==$comdata['User']['id']){
+		echo "<div class='comment_body_me'>";
+	}
+	else{
+		echo "<div class='comment_body'>";  ///commented by topic owner
+	}
+	if($comdata['User']['username']=="nobody"){
+			echo "<div class='comment_name'>".$comdata['User']['username']."</div>";
+	}
+	else{
+			echo "<div class='comment_name'>".$comdata['User']['username']."</div>";
+	}
+			echo "<div class='comment_text'>";
+				echo nl2br(h($comdata['Comment']['body']));
+			echo "</div>";
+	if($me!=$comdata['User']['id']){
+			echo "<div style='text-align:left; margin-top:5px;'>";
+				echo $html->image('/img/basic/good_mark.png',array('url' => array(
+					'controller'=>'comments', 
+					'action' => 'good', 
+					'topicid' => $topics[0]['Topic']['id'], 
+					'cid'=>$comdata['Comment']['id']
+				),'width'=>'15px','height'=>'15px'));
+				echo "　";
+				echo $comment_good[$comdata['Comment']['id']];
+				echo "　";
+				echo $html->image('/img/basic/bad_mark.png', array('url' => array(
+					'controller'=>'comments', 
+					'action' => 'bad', 
+					'topicid' => $topics[0]['Topic']['id'], 
+					'cid'=>$comdata['Comment']['id']
+				),'width'=>'15px','height'=>'15px'));
+				echo "　";
+				echo $comment_bad[$comdata['Comment']['id']];
+
+					// Re-Comment link
+					//echo $html->link('Comment', array(
+					//	'controller'=>'comments', 
+					//	'action' => 'add', 
+					//	'topicid' => $tpdata['Topic']['id'], 
+					//	'cid'=>$comdata['Comment']['id']
+					//));
+			echo "</div>";
+	}
+		echo "</div>";
+	echo "</div>";
+	echo "<div style='clear:both'></div>";
+}
+echo "<br />";
+echo "<br />";
 
 echo $paginator->prev('<< '.__('previous', true), array(), ' ', array('class'=>'disabled'));
 echo $paginator->numbers();
 echo $paginator->next(__('next', true).' >>', array(), ' ', array('class'=>'disabled'))
-
-/*
-echo "<br />";
-echo "<br />";
-var_dump($comments);
-*/
 ?>

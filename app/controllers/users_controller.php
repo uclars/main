@@ -3,14 +3,15 @@ class UsersController extends AppController
 {
 	var $components = array('Auth', 'Facebook.Connect', 'Session');
 	var $name = 'Users';
-	var $helpers = array('Html', 'Form', 'NiceNumber');
-	var $layout = "home";
+	var $helpers = array('Html', 'Form', 'NiceNumber', 'Session');
+	var $layout = "user";
 	var $uses = array('User', 'Topic', 'Comment');
 
 
    function beforeFilter() {
 	parent::beforeFilter(); 
-	$this->Auth->allow('add', 'login');
+	/*$this->Auth->allow('add', 'login');*/
+	$this->Auth->allow('*');
 
 	/*
 	//認証パラメータをusername -> emailに変更
@@ -36,8 +37,13 @@ class UsersController extends AppController
 
 
 	function login() {
-		$this->set('error', false);
+		/// get topic title for facebook like display on facebook wall
+		$topic_title = $this->Session->read('title');
+		$this->set('title',$topic_title);
 
+//		$this->redirect('/');
+
+		$this->set('error', false);
 /*
 		if(empty($this->data)){
 			if($this->Auth->user()){
@@ -74,9 +80,6 @@ class UsersController extends AppController
 				$this->set('error', true);
 			}
 		}
-*/
-
-
 
 		if($this ->data){    
 			$user = $this->Auth->user();    
@@ -95,12 +98,14 @@ class UsersController extends AppController
 				//ログイン失敗した時の処理
 			}
 		}
+*/
+
 	}
 
 	function logout() {
 		$this->Auth->logout();
 		$this->Session->destroy();
-		$this->redirect('/home/');
+		$this->redirect('/');
 	}
 
 	function register() {
@@ -111,46 +116,49 @@ class UsersController extends AppController
 			return;
 		}
 */
+		$phase_num = $this->Session->read('phase');
 		$first_time = $this->Session->read('firsttime');
-
 		if(!empty($first_time)){
-
+			$this->Session->write('phase', 10);
+			 $this->redirect(array("controller" => "tutorials", "action" => "phase", 10));
+/*
 			/// input a nickname
 			if(!empty($this->params['data']['User']['username'])) {
-				$id_array = $this->Session->read('Auth.User');
+				$facebook_array = $this->Session->read('Auth.User');
 				$nickname = $this->params['data']['User']['username'];
-				$this->Session->write('nick_name', $nickname);
 				$check_existance = $this->User->find(array('username'=>$nickname));
 
 				if(!$check_existance){
-					$id = $this->Session->read('Auth.User');
-	
+					$id_array =  $this->User->findbyFacebookId($facebook_array['facebook_id']);
+
 					$data = array();
-					$data['User']['id'] = $id_array['id'];
+					$data['User']['id'] = $id_array['User']['id'];
 					$data['User']['username'] = $nickname;
 					$data['User']['profile_img'] = '/img/profile/'.$nickname.'.png';
 					$fields = array('username', 'profile_img');
 					$this->User->save($data, false, $fields);
 
 					$user_array = $this->Session->read('Auth.User');
-					$user_array['username'] = $nickname;
+					$user_array['id'] = $id_array['User']['id'];
+					//$user_array['username'] = $nickname;
+					$user_array['username'] = NULL;
 					$this->Session->write('Auth.User', $user_array);
+					$this->Session->write('phase', 10);
 					$this->Session->delete('firsttime');
-					$this->redirect('/home');
-/*
-echo"<PRE>";
-var_dump($this->Session->read('firsttime'));
-echo"</PRE>";
-exit;
-*/
-
+					$this->redirect('/');
 				}
 				else{ //nickname is already taken 
 					$this->redirect(array('action'=>'register', $id_array['id']));
 				}
 				return;
-
 			}
+*/
+
+		}
+		else{
+echo $first_time;
+echo "lhl";
+exit;
 		}
 	}
 
@@ -186,21 +194,28 @@ exit;
 		$id = $this->params['named']['id'];
 		$me_array = $this->Session->read('Auth.User');
 		$me = $me_array['id'];
+		$this->set('username', $me_array['username']);
 
-		$t_user = $this->User->find(array('id'=>$id));
-		$this->set('target_user', $t_user);
-
+		if($id==$me){
+			$this->User->recursive = 2;
+			$t_user = $this->User->find(array('User.id'=>$id));
+			$this->set('target_user', $t_user);
+		}
+		else{
+			$this->redirect($this->referer());
+		}
 
 
 /*
+$p_user = $this->User->find();
 echo("<PRE>");
-var_dump($me);
+var_dump($id);
 echo("</PRE>");
+exit;
 */
 
 
-
-		/// get Following info  ///
+		/*/// get Following info  ///
 		$this->User->recursive=0;
 		$user_list = $this->User->find('all');
 
@@ -214,7 +229,26 @@ echo("</PRE>");
 		$this->set('user_list', $user_list);
 		$this->set('follower_list', $follower_list);
 		$this->set('my_follower_list', $my_follower_list);
-		///                   ////
+		///                   ////*/
+
+
+		//$topic_array = $this->requestAction("topics/getFollowingTopicList/$id"); //get following topics
+
+		//$topic_array = $this->requestAction(array(
+		//	'controller' => 'followings',
+		//	'action' => 'following_topic'
+		//));
+		$topic_array = $this->_getFollowingTopics($id);
+		$this->set('following_topics', $topic_array);
+
+
+/*
+echo("<PRE>");
+var_dump($topic_array);
+echo("</PRE>");
+exit;
+*/
+
 
 
 		/// get target user topics   ///
@@ -233,6 +267,28 @@ echo("</PRE>");
 		$this->set('target_comments', $target_comments);
 	}
 
+	function _getFollowingTopics($id){
+		$topic_array = array(); 
+		App::import('Model', 'FollowingTopics');
+		$this->FollowingTopics = new FollowingTopics();
+		$conditions = array('FollowingTopics.user_id' => $id, 'FollowingTopics.deleted' => 0, 'NOT'=>array('FollowingTopics.following_topic_id'=>NULL));
+		//$fields = array('DISTINCT FollowingTopics.following_topic_id');
+		$fields = array();
+		$order = array('FollowingTopics.id DESC');
+		$following_topic = $this->FollowingTopics->find('all', array('conditions' => $conditions, 'fields'=>$fields, 'order' => $order));
+		
+
+		return $following_topic;
+
+/*
+echo "<PRE>";
+var_dump($following_topic);
+echo "</PRE>";
+exit;
+*/
+
+	}
+
 	function _getFollowerList($id){
 		//put the followers who are followed by clicked id in array
 		$follower_list = array();
@@ -241,17 +297,30 @@ echo("</PRE>");
 				'action' => 'following_user'
 			), array('userid' => $id));
 	        $i=0;
-		foreach($follower_data as $fdata){
-			$follower_list[$i]=$fdata['FollowingUsers']['following_user_id'];
-			$i++;
-        	}
+
+
+
+/*
+echo("<PRE>");
+var_dump($follower_data);
+echo("</PRE>");
+exit;
+*/
+
+
+		if(!empty($follower_data)){
+			foreach($follower_data as $fdata){
+				$follower_list[$i]=$fdata['FollowingUsers']['following_user_id'];
+				$i++;
+       		 	}
+		}
 
 		return $follower_list;
 	}   
 
 	function _getTopics($id){
 		$params = array(
-			'conditions' => array('Topic.user_id'=>$id, 'Topic.deleted'=>0),
+			'conditions' => array('Topic.user_id'=>$id, 'Topic.deleted'=>0, 'Topic.hide'=>0),
 		);
 		$target_topic = $this->Topic->find('all', $params);
 

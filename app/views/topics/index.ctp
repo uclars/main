@@ -3,7 +3,7 @@ foreach($topics as $tpdata){
 	$me_array = $this->Session->read('Auth.User');
 	$me = $me_array['id'];
 
-	echo $tpdata['Topic']['body'];
+	echo $tpdata['Topic']['title'];
 	if(in_array($tpdata['Topic']['id'],$following_topic_list)){
 		echo "　　".$html->link('unfollow', array('controller'=>'followings', 'action'=>'action', 'do'=>'unfollow_topic', 'id'=>$tpdata['Topic']['id']));
 	}

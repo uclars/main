@@ -1,0 +1,37 @@
+<?php
+class UsersController extends AppController
+{
+	var $name = 'Users';
+	var $helpers = array('Html', 'Form', 'NiceNumber');
+	var $layout = "user";
+	var $uses = array('User', 'Topic', 'Comment');
+	var $components = array('Auth');
+
+
+   function beforeFilter() {
+	parent::beforeFilter(); 
+	$this->Auth->allow('*');
+
+   }
+
+
+	function home() {
+//    		$this->checkSession();
+//    		$this->set('me', $this->User->findById($this->Session->read('my_id')));
+	}
+
+
+
+
+
+	function login() {
+	}
+
+	function logout() {
+		$this->Auth->logout();
+		$this->Session->destroy();
+		$this->redirect('/');
+	}
+
+}
+?>

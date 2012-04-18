@@ -1,0 +1,216 @@
+<?php
+switch($phase){
+	case 0:
+		echo "<div id=\"tutorial0\">";
+		echo "<div id=\"facebook\">";
+		echo $facebook->login(array('perms'=>'email','size' => 'xlarge'));
+		echo "</div>";
+		echo "</div>";
+		break;
+	case 05:
+		break;
+	case 10:
+		foreach($topics as $tpdata){
+			$me_array = $this->Session->read('Auth.User');
+			$me = $me_array['id'];
+
+			echo "<div class='comment'>";
+			if($tpdata['Topic']['id']==1){
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo $html->link(h($tpdata['Topic']['title']), array('controller'=>'topics', 'action'=>'show_topic', 'topicid'=>$tpdata['Topic']['id']))." ";
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+					echo h($tpdata['Following_topic_numbers']['count']);
+				echo "</span>";
+				echo "</div>";
+			}
+			else{
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo $tpdata['Topic']['title'];
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+				///if there is number, show the nnum. if there is no number, show 0
+				if(!empty($tpdata['Following_topic_numbers']['count'])){
+					echo h($tpdata['Following_topic_numbers']['count']);
+				}
+				else{
+					echo "0";
+				}
+				echo "</span>";
+				echo "</div>";
+			}
+			echo "</div>";
+			echo "</div>";
+			echo "<div style='clear:both'></div>";
+			echo "<br />";
+		}
+		break;
+	case 30:
+		echo "now you see the timeline of \"where are you from?\" you have just followed<br />";
+		echo "Let's follow the user. ";
+		echo $html->link('go', array('controller'=>'tutorials', 'action'=>'phase',30, 1));
+		echo "<br /><br />";
+
+		break;
+	case 40:
+		echo "now, you can follow users, too.<br />";
+		echo "click my name tavivit and go to my profie page <br /><br />";
+
+		echo "<table><tr><td rowspan=4>";
+		echo $this->Html->image('/img/profile/suzuki.png');
+		echo "</td></tr>";
+		echo "<tr><td>";
+		echo $html->link('tavivit', array('controller'=>'tutorials', 'action'=>'phase',40, 1));
+		echo "</td><td></td></tr>";
+		echo "<tr><td colspan=2>";
+		echo "click my name!";
+		echo "</td></tr><tr><td colspan=2>";
+		echo "tavivit comment";
+		echo "</td></tr></table>";
+
+		break;
+	case 50:
+		echo $html->image('/img/profile/suzuki.png');
+		echo "　　tavivit";
+
+		echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_user', 'id'=>'74'));
+		echo "<br /><br />";
+
+		break;
+	case 60:
+		echo "now let's try putting comments<br />";
+		echo "before that, we want your nickname.<br />";
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 60, 1)
+			)
+		    );
+		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
+		echo $this->Form->end('GO');
+
+		break;
+	case 70:
+		echo "you see my comment for you?<br />";
+		echo "now, choose your avator.<br /><br />";
+		echo $html->link('go pic my avator', array('controller'=>'tutorials', 'action'=>'phase', 70, 1));
+		break;
+	case 80:
+		echo "We will do a personality analysis for you.<br />";
+		echo "This personality analysis is based on the Western astrology and the Four Pillars of Chinese astrology.<br />";
+		echo "There are 7 personality groups as shown below.<br /><br />";
+		echo "<table><tr><td>Pug</td><td>Siberian Husky</td><td>Australian Shepherd</td><td>Boxer</td><td>Shiba Inu</td><td>Dachshund</td><td>Dingo</td></tr>";
+		echo "<tr><td><img src='/img/avator/dogs/pug/pug_64.png' /></td><td><img src='/img/avator/dogs/husky/husky_64.png' /></td><td><img src='/img/avator/dogs/shepherd/shepherd_64.png' /></td><td><img src='/img/avator/dogs/boxer/boxer_64.png' /></td><td><img src='/img/avator/dogs/shiba/shiba_64.png' /></td><td><img src='/img/avator/dogs/dachshund/dachshund_64.png' /></td><td><img src='/img/avator/dogs/dingo/dingo_64.png' /></td></tr></table>";
+
+		echo "<br /><br />";
+		echo "Input your birthday:";
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 80, 1)
+			)
+		    );
+		echo $form->datetime('birthdate','YMD','none');
+		echo $this->Form->end('GO',array('div'=>false, 'label'=>false));
+		echo "<br />";
+
+/*
+		echo "Which one do you like?<br /><br />";
+
+		echo $this->Form->create(
+			null, array('url' => 
+				array('controller'=>'tutorials', 'action' => 'phase', 80, 1)
+			)
+		    );
+		echo "<table><tr><td>";
+		echo $this->Form->input('avator',
+					array(
+						'type'=>'radio',
+						'options'=>array("Pug","Siberian Husky","Australian Shepherd","Boxer","Shiba Inu","Dachshund","Dingo"),
+						'legend'=>false,
+						'div'=>false,
+						'label'=>false,
+						'separator'=>'</td><td>',
+						'value'=>'0'
+					)
+				   );
+		echo "</td></tr>";
+		echo "<tr><td><img src='/img/avator/dogs/pug/pug_64.png' /></td><td><img src='/img/avator/dogs/husky/husky_64.png' /></td><td><img src='/img/avator/dogs/shepherd/shepherd_64.png' /></td><td><img src='/img/avator/dogs/boxer/boxer_64.png' /></td><td><img src='/img/avator/dogs/shiba/shiba_64.png' /></td><td><img src='/img/avator/dogs/dachshund/dachshund_64.png' /></td><td><img src='/img/avator/dogs/dingo/dingo_64.png' /></td></tr>";
+		echo "<tr><td>";
+		echo $this->Form->submit('submit');
+		echo $this->Form->end();
+		echo "</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+		echo "</table>";
+*/
+
+
+
+		break;
+
+	case 81:
+		echo "<img src='".$avators['MasterAvator']['url96']."'/><br />";
+		echo "your dog type is ".$avators['MasterAvator']['name'].".<br />";
+		echo $avators['MasterAvator']['type_title'].".<br />";
+		echo $html->link('put a comment', array('controller'=>'tutorials', 'action'=>'phase', 81, 1));
+		break;
+
+	case 90:
+		echo "Let's put your comment on 'Where are you from?' topic.<br /><br />";
+
+		echo $this->Form->create('Comment', array('controller'=>'comments', 'action' => 'add'));
+		echo $this->Form->hidden('topic_id',array('value'=>'1'));
+		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
+		echo $this->Form->end('GO');
+
+		break;
+	case 100:
+		echo "Congraturations!!<br />";
+		echo "you've just completed the tutorial.<br /><br />";
+		echo "now go to your home, adn enjoy this serivce!<br />";
+		echo  $html->link('go to home', array('controller'=>'tutorials', 'action' => 'phase', 100, 1));;
+
+		break;
+
+}
+
+//show the time line
+if(!($phase == 0 or $phase == 10 or $phase == 20 or $phase == 50 or $phase == 60 or $phase == 80 or $phase == 81)){
+		echo "<table>";
+	foreach($datas as $topic){
+			echo "<tr><td rowspan=4>";
+				echo $this->Html->image(h($topic['User']['Master_avators']['url48']));
+			echo "</td></tr>";
+			echo "<tr><td>";
+				echo h($topic['User']['username']);
+			echo "</td>";
+			echo "<td>";
+				echo $this->NiceNumber->getNiceTime(h($topic['Comment']['created']));
+			echo "</td></tr>";
+			echo "<tr><td colspan=2>";
+				echo h($topic['Comment']['body']);
+			echo "</td></tr>";
+			echo "<tr><td colspan=2>";
+				echo h($topic['Topic']['title']);
+			echo "</td></tr>";
+	}
+		echo "</table>";
+}
+	
+
+/*
+$tm = in_array(3,$user_list);
+echo "VIEW on the HOME bottom!!<BR>";
+echo "<PRE>";
+var_dump($user_list);
+echo "</PRE>";
+*/
+
+
+?>
+

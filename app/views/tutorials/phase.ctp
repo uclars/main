@@ -1,151 +1,168 @@
 <?php
 switch($phase){
-	case 10:
-		echo "You can follow topics you get interested.<br />";
-		echo "Let's follow a topic.<br />";
+	case 0:
+		echo "<div id=\"tutorial0\">";
+		echo "<div id=\"facebook\">";
+		echo $facebook->login(array('scope'=>'email, user_birthday','size' => 'xlarge'));
+		echo "</div>";
+		echo "</div>";
 		break;
-	case 20:
+	case 10:
 		foreach($topics as $tpdata){
-			$me_array = $this->Session->read('Auth.User');
 			$me = $me_array['id'];
 
-			echo $tpdata['Topic']['body'];
-			if($tpdata['Topic']['id']==1){
-				echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$tpdata['Topic']['id']));
+			echo "<div class='comment'>";
+			if($tpdata['Topic']['id']==1){ //Clicable only id=1 topic for tutorial
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo $html->link(h($tpdata['Topic']['title']), array('controller'=>'tutorials', 'action'=>'phase',10, 1))."&nbsp;&nbsp;&nbsp;← click the topic title!";
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+					echo h($tpdata['Following_topic_numbers']['count']);
+				echo "</span>";
+				echo "</div>";
 			}
+			else{ //Unclickable
+				echo "<div class='comment_pic'>";
+					echo $html->image($tpdata['Master_categories']['url']);
+				echo "</div>";
+				echo "<div class='topic_body'>";
+					echo h($tpdata['Topic']['title']);
+				echo "<div class='comment_following'>";
+					echo "follower";
+				echo "<span class='num'>";
+				///if there is number, show the number. if there is no number, show 0
+				if(!empty($tpdata['Following_topic_numbers']['count'])){
+					echo h($tpdata['Following_topic_numbers']['count']);
+				}
+				else{
+					echo "0";
+				}
+				echo "</div>";
+			}
+				echo "</div>";
+			echo "</div>";
+			echo "<div style='clear:both'></div>";
 			echo "<br />";
 		}
 		break;
+	case 20:
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+				echo "<div class='topic_social'>";
+				echo "<span style='font-weight:bold; font-size:larger;'>";
+					echo $html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_topic', 'id'=>$topics[0]['Topic']['id']));
+				echo "</span>";
+				echo "</div>";
+			echo "</div>";
+			echo "<br /><br />";
+			echo "<div class='topic_body'>";
+				echo nl2br(h($topics[0]['Topic']['body']));
+			echo "</div>";
+		echo "</div>";
+		echo "<br /><br />";
+
+		break;
 	case 30:
-		echo "now you see the timeline of \"where are you from?\" you have just followed<br />";
-		echo "Let's follow the user. ";
-		echo $html->link('go', array('controller'=>'tutorials', 'action'=>'phase',30, 1));
-		echo "<br /><br />";
-
-		break;
-	case 40:
-		echo "now, you can follow users, too.<br />";
-		echo "click my name tavivit and go to my profie page <br /><br />";
-
-		echo "<table><tr><td rowspan=4>";
-		echo $this->Html->image('/img/profile/suzuki.png');
-		echo "</td></tr>";
-		echo "<tr><td>";
-		echo $html->link('tavivit', array('controller'=>'tutorials', 'action'=>'phase',40, 1));
-		echo "</td><td></td></tr>";
-		echo "<tr><td colspan=2>";
-		echo "click my name!";
-		echo "</td></tr><tr><td colspan=2>";
-		echo "tavivit comment";
-		echo "</td></tr></table>";
-
-		break;
-	case 50:
-		echo $html->image('/img/profile/suzuki.png');
-		echo "　　tavivit";
-
-		echo "　　".$html->link('follow', array('controller'=>'followings', 'action'=>'action', 'do'=>'follow_user', 'id'=>'41'));
-		echo "<br /><br />";
+		echo "<div class='comment'>";
+			echo "<div class='comment_pic'>";
+				echo $html->image($first_topic['Master_categories']['url']);
+			echo "</div>";
+			echo "<div class='comment_body'>";
+				echo h($first_topic['Topic']['title']);
+			echo "</div>";
+			echo "<div class='comment_text'>";
+				echo "follower ";
+				echo "<span class='num'>";
+					echo h($first_topic['Following_topic_numbers']['count']);
+				echo "</span>";
+			echo "</div>";
+		echo "</div>";
 
 		break;
 	case 60:
-		echo "now let's try putting comments<br />";
-		echo "before that, we want your nickname.<br />";
+		echo "Input your nickname.<br /><br />";
+		if(!empty($error_mssg)){
+			echo "<div style='color: red;'>";
+			echo $error_mssg;
+			echo "</div>";
+		}
 		echo $this->Form->create(
-			null, array('url' => 
-				array('controller'=>'tutorials', 'action' => 'phase', 60, 1)
+			null, array('url' =>
+				array('controller'=>'tutorials', 'action' => 'phase', 60, 1),
+				'name' => 'f'
 			)
-		    );
-		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
-		echo $this->Form->end('GO');
+		);
+		echo $this->Form->text('body', array('value'=>'type username!', 'onfocus'=>'this.value=""','onblur'=>'if(this.value=="") this.value="type username!"','style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
+		echo $this->Form->end(' POST ');
 
 		break;
 	case 70:
-		echo "you see my comment for you?<br />";
-		echo "now, choose your avator.<br /><br />";
-		echo $html->link('go pic my avator', array('controller'=>'tutorials', 'action'=>'phase', 70, 1));
-		break;
-	case 80:
-		echo "Which one do you like?<br /><br />";
+		echo "<br /><br /><br />";
+		echo "<img src='/img/basic/ribbon/ribbon_48.png' style='vertical-align:middle;'/><span style='font-size:20px;'> Welcome! $username</span><br /><br />";
+		echo "Enjoy the Whisprr Life!";
 
-		echo $this->Form->create(
-			null, array('url' => 
-				array('controller'=>'tutorials', 'action' => 'phase', 80, 1)
-			)
-		    );
-		echo "<table><tr><td>";
-		echo $this->Form->input('avator',
-					array(
-						'type'=>'radio',
-						'options'=>array("white","blue"),
-						'legend'=>false,
-						'div'=>false,
-						'label'=>false,
-						'separator'=>'</td><td>',
-						'value'=>'0'
-					)
-				   );
-		echo "</td></tr>";
-		echo "<tr><td><img src='/img/profile/74/74.png' /></td><td><img src='/img/profile/74/74.png' /></td></tr>";
-		echo "<tr><td>";
-		echo $this->Form->submit('submit');
-		echo $this->Form->end();
-		echo "</td><td></td></tr>";
-		echo "</table>";
 		break;
 	case 90:
-		echo "Let's put your comment on this.<br /><br />";
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo nl2br(h($topics[0]['Topic']['body']));
+			echo "</div>";
+		echo "</div>";
 
-		echo $this->Form->create('Comment', array('controller'=>'comments', 'action' => 'add'));
+		echo $this->Form->create(
+			null, array('url' =>
+				array('controller'=>'tutorials', 'action' => 'phase', 90, 1)
+			)
+		);
+
 		echo $this->Form->hidden('topic_id',array('value'=>'1'));
-		echo $this->Form->text('body', array('style' => 'width:500px; height:45px; font-size:2em; padding-top:3px;'));
-		echo $this->Form->end('GO');
+		echo $this->Form->textarea('body', array('cols'=>'50', 'rows'=>'6', 'style'=>'font-size:180%; width:100%;'));
+		echo $this->Form->end(' POST ');
+
+		echo "<br /><br />";
 
 		break;
 	case 100:
-		echo "Congraturations!!<br />";
-		echo "you've just completed the tutorial.<br /><br />";
-		echo "now go to your home, adn enjoy this serivce!<br />";
-		echo  $html->link('go to home', array('controller'=>'tutorials', 'action' => 'phase', 100, 1));;
+		echo "<div class='topic'>";
+			echo "<div class='topic_pic'>".$html->image($topics[0]['Master_categories']['url'])."</div>";
+			echo "<div class='topic_content'>";
+				echo "<div class='topic_title'>".h($topics[0]['Topic']['title'])."</div>";
+			echo "</div>";
+			echo "<div class='topic_body'>";
+				echo nl2br(h($topics[0]['Topic']['body']));
+			echo "</div>";
+		echo "</div>";
 
 		break;
 
 }
+		
 
-//show the time line
-if(!($phase == 10 or $phase == 20 or $phase == 50 or $phase == 60 or $phase == 80)){
-		echo "<table>";
-	foreach($datas as $topic){
-			echo "<tr><td rowspan=4>";
-				echo $this->Html->image(h($topic['User']['profile_img']));
-			echo "</td></tr>";
-			echo "<tr><td>";
-				echo h($topic['User']['username']);
-			echo "</td>";
-			echo "<td>";
-				echo $this->NiceNumber->getNiceTime(h($topic['Comment']['created']));
-			echo "</td></tr>";
-			echo "<tr><td colspan=2>";
-				echo h($topic['Comment']['body']);
-			echo "</td></tr>";
-			echo "<tr><td colspan=2>";
-				echo h($topic['Topic']['body']);
-			echo "</td></tr>";
+
+//show the comment line
+if($phase == 20 || $phase == 90 || $phase == 100){
+	foreach($comments as $comdata){
+		echo "<div class='comment'>";
+			echo "<div class='comment_pic'>".$html->image($comdata['User']['Master_avators']['url48'])."</div>";
+			echo "<div class='comment_body'>";
+				echo "<div class='comment_name'>".h($comdata['User']['username'])."</div>";
+				echo "<div class='comment_text'>";
+					echo nl2br(h($comdata['Comment']['body']));
+				echo "</div>";
+			echo "</div>";
+		echo "</div>";
+		echo "<div style='clear:both'></div>";
 	}
-		echo "</table>";
 }
-	
-
-
-
-/*
-$tm = in_array(3,$user_list);
-echo "VIEW on the HOME bottom!!<BR>";
-echo "<PRE>";
-var_dump($user_list);
-echo "</PRE>";
-*/
-
-
 ?>
 

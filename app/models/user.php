@@ -2,6 +2,18 @@
 class User extends AppModel
 {
 	var $name = 'User';
+	var $belongsTo = array(
+		'Master_avators' => array(
+			'className' => 'Master_avators',
+			'foreignKey' => 'avator_num',
+			'conditions' => '',
+			'fields' => 'Master_avators.name, Master_avators.url24, Master_avators.url32, Master_avators.url48, Master_avators.url64, Master_avators.url96, Master_avators.url128, Master_avators.url192',
+			'order' => '',
+			'type' => 'INNER'
+		)
+	);
+
+/*
 	var $validate = array(
 		'email' => array(
 			'notEmpty' => array(
@@ -68,5 +80,6 @@ class User extends AppModel
 		)
 	);
 	var $hasMany = array('Post');
+*/
 }
 ?>

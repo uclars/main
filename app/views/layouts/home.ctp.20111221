@@ -1,0 +1,157 @@
+<?= $facebook->html(); ?>
+<?php $auth = $this->Session->read('Auth.User'); ?>
+<head>
+	<?php echo $html->charset()."\n"; ?>
+	<title>Whisprr<?php echo (strcmp($title_for_layout, '') != 0) ? ' / '.$title_for_layout : ''; ?></title>
+	<?php echo $html->meta('icon')."\n"; ?>
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<!--<?php echo $html->css('cake.generic')."\n"; ?>-->
+	<?php echo $html->css('style')."\n"; ?>
+	<?php echo $scripts_for_layout."\n"; ?>
+	<!--[if IE 5.5000 | IE 6]>
+	<style type="text/css">
+		.ail { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/basic/park/park_192.png', sizingMethod=scale); width:192px; height:192px; }
+		.ail img { display: none; }
+	</style>
+	<![endif]-->
+</head>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27637475-1']);
+  _gaq.push(['_setDomainName', 'whisprr.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<body>
+<div id="container">
+<!--		<h2>Join the information party, Express the best of you!</h2>  -->
+	<div id="header"><div id="header_wrapper"><div id="logo"><h1><a href="/">Whisprr</a></h1></div>
+	<?php //if "invite" is on, show the invite top page ?>
+	<?php if(empty($auth)&&$invite==true): ?>
+		</div>
+		</div>
+		<div id="wrapper">
+			<div id="head_wrapper">
+				<div id="headline">
+					<h1>Social Web Forum</h1>
+					<h2><span style='color:#f7376b'>Good</span> Contents + <span style='color:#f7376b'>Good</span> People =</h2>
+					<h2><span style='color:#f7376b'>Best</span> place to chat ♪  </h2>
+				</div>
+				<div id="head_pic">
+<!--	service description video -->
+					<!--<span class="ail"><img src='/img/basic/park/park_192.png' /></span>-->
+				</div>
+			</div>
+		</div>
+		<div id="first_top_wrapper">
+			<div id="first_top_login">
+				<h3>Returning Users</h3>
+				<p>Facebook login</p>
+				<?php echo $facebook->login(array('scope'=>'email, user_birthday')); ?>
+			</div>
+			<div id="first_top_invitation">
+				<h3>New Users</h3>
+				<?php
+					echo $form->create('InviteCodes',array('action'=>'index','type'=>'post'));
+					echo "<p>";
+					echo $form->label('Invite', 'Invite code');
+					echo "</p>";
+					echo $form->text('Invite.code');
+					echo $form->end(array('label'=>'SEND','name'=>'submitButton','div'=>array('class'=>'submitDiv')));
+				?>
+			</div>
+		</div>
+		<?= $facebook->init(); ?>
+	<?php //if "invite" is off, show the main page ?>
+	<?php  else: ?>
+		<div id="header_nav">
+		<?php if(empty($auth)){ ?>
+			<?php echo $facebook->login(array('perms'=>'email')); ?>
+		<?php }else{ ?>
+                                        <table><tr><td>
+						<img src="/img/basic/casual_woman/casual_woman_32.png" />
+                                        </td><td>
+						<?php echo($html->link('profile', array('controller'=>'users',  'action'=>'show_users', 'id'=>h($auth['id'])))); ?>
+                                        </td><td>
+                                                <img src="/img/basic/leaves_32.png" />
+                                        </td><td>
+                                                <?php echo $facebook->logout(array('redirect'=>array('controller'=>'users', 'action'=>'logout'))); ?>
+                                        </td></tr></table>
+		<?php  } ?>
+		</div>
+	</div>
+	</div>
+	<div id="wrapper">
+		<div id="head_wrapper">
+			<div id="headline">
+				<h1><span style='color:#f7376b'>Magic</span> Story Board</h1>
+				<h2>Messages become a story when everyone joins ♪ </h2> 
+				<!--<h2>Let girls keep talking ♪</h2>  -->
+			</div>
+			<div id="head_pic">
+				<?php echo $html->link($html->image("basic/cat1_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>1),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat2_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>2),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat3_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>3),array('escape' => false),false); ?>
+				<br />
+				<?php echo $html->link($html->image("basic/cat4_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>4),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("basic/cat5_l.png"),array('controller'=>'topics',  'action'=>'topiccatlist', 'catid'=>5),array('escape' => false),false); ?>
+				<?php echo $html->link($html->image("/img/basic/park/park_192_words.png", array('width'=>96,'height'=>96)),array('controller'=>'topics',  'action'=>'create'),array('escape' => false),false); ?>
+			</div>
+		</div>
+		<div class="nav">
+			<ul class="nl clearFix">
+				<?php  if($this->action == 'index'): ?>
+				<li class="active"><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+				<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+				<li><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+				<?php elseif($this->action == 'newtopics'): ?>
+				<li><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+
+				<li class="active"><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+				<li><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+				<?php elseif($this->action == 'mytopics'): ?>
+				<li><?php echo($html->link('hot topics', array('controller'=>'home', 'action'=>'index'))); ?></li>
+
+				<li><?php echo($html->link('new topics', array('controller'=>'home', 'action'=>'newtopics'))); ?></li>
+				<li class="active"><?php echo($html->link('my topics', array('controller'=>'home', 'action'=>'mytopics'))); ?></li>
+				<?php endif; ?>
+			</ul>
+		</div>
+		<div style="clear:both"></div>
+		<div id="content">
+<!-- START content -->
+<?php
+	$session->flash();
+	echo $content_for_layout."\n";
+?>
+<!-- END content -->
+		</div>
+		<div id="navigation_wrapper">
+			<div id="navigation">
+				<!--<img src='/img/basic/park/park_192_words.png' wight=200 height=200/>-->
+			</div>
+			<div id="navigation">
+				<!--<img src='/img/basic/park/park_192_words.png' />-->
+				<div class=ntitle>Top Rank Topics</div>
+<?php
+				echo $this->element('home_ranking');
+?>
+<!--<p>adkfajdkfa;lkdsjfa;dkfja;kdfja;dlfkja;dslkfja;ldskfjakdfjla</p>-->
+			</div>
+		</div>
+	</div>
+	<div id="footer"> 
+		<?php echo $html->link('Copyright 2011 Whisprr', 'http://whisprr.com/', array('target'=>'_blank'), null, false)."\n"; ?>
+	</div>
+</div>
+<?= $facebook->init(); ?>
+	<?php  endif; ?>
+</body>
+</html>

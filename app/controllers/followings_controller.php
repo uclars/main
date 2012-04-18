@@ -3,9 +3,22 @@ class FollowingsController extends AppController
 {
 	var $name = 'Followings';
 	var $uses = array('FollowingUsers', 'FollowingTopics');
+	var $helpers = array('Session');
+	var $components = array('Auth', 'Facebook.Connect', 'Session');
+
+
+	
+        //### アクションが実行される前に実行 ###
+        function beforeFilter() {
+                //親クラス呼出
+                parent::beforeFilter();
+                //[Auth]例外設定
+                $this->Auth->allow('*');
+
+        }
+
 
 	function index(){
-
 	}
 
 	function following_user(){
@@ -35,19 +48,12 @@ class FollowingsController extends AppController
 		$following_topic = null;
 
 		if($me){
-			$conditions = array('user_id' => $me, 'deleted' => 0, 'NOT'=>array('following_topic_id'=>NULL));
-			$order = array('id DESC');
-			$following_topic = $this->FollowingTopics->find('all', array('conditions' => $conditions, 'order' => $order));
+			$conditions = array('FollowingTopics.user_id' => $me, 'FollowingTopics.deleted' => 0, 'NOT'=>array('FollowingTopics.following_topic_id'=>NULL));
+			//$fields = array('DISTINCT FollowingTopics.following_topic_id');
+			$fields = array();
+			$order = array('FollowingTopics.id DESC');
+			$following_topic = $this->FollowingTopics->find('all', array('conditions' => $conditions, 'fields'=>$fields, 'order' => $order));
 		}
-
-
-/*
-echo("<PRE>");
-var_dump($following_topic);
-echo("</PRE>");
-exit;
-*/
-
 
                 return $following_topic;
         }
@@ -55,6 +61,8 @@ exit;
 	function action(){
 		$id = $this->params['named']['id'];
 		$do = $this->params['named']['do'];
+
+		$referer = $_SERVER['HTTP_REFERER'];
 
 		switch($do){
 			case "follow_user":
@@ -83,10 +91,10 @@ exit;
 		}
 		$this->Session->write('msg', $msg);
 
-		$tutorial_flag = $this->Session->read('phase');
-
 		/// if in tutorial, redirect to the tutorial page
 		/// else, redirect to the top paeg
+		$tutorial_flag = $this->Session->read('phase');
+
 		if(!empty($tutorial_flag)){
 			if($tutorial_flag==20){
 				$this->redirect(array("controller" => "tutorials", "action" => "phase", 20, 1));
@@ -96,7 +104,8 @@ exit;
 			}
 		}
 		else{
-			$this->redirect('/');
+			$this->redirect($referer);
+			//$this->redirect('/');
 		}
 	}
 
@@ -114,16 +123,6 @@ return 0;
 			$fdata['FollowingUsers']['user_id'] = $me;
 			$fdata['FollowingUsers']['following_user_id'] = $my_followers;
 
-
-/*
-echo("<PRE>");
-var_dump($fdata);
-echo("</PRE>");
-exit;
-*/
-
-
-
 			$this->FollowingUsers->save($fdata);
 
 
@@ -136,21 +135,11 @@ exit;
                 $count = $this->_check_count($me, $my_followers);
 
                 if($count == 0){
-			$fcondition=array('user_id' => $me, 'following_user_id' => $my_followers, 'deleted' => 0);
+			$fcondition=array('FollowingTopics.user_id' => $me, 'FollowingTopics.following_user_id' => $my_followers, 'FollowingTopics.deleted' => 0);
 			$fdata = $this->FollowingUsers->find('first', array('conditions'=>$fcondition));
 			$fdata['FollowingUsers']['deleted'] = 1;
+			$fdata['FollowingUsers']['modified'] = null;
 			
-
-
-/*
-echo("<PRE>");
-var_dump($fdata);
-echo("</PRE>");
-exit;
-*/
-
-
-
                         $this->FollowingUsers->save($fdata);
                 }
 	}
@@ -163,14 +152,6 @@ exit;
 			$fdata['FollowingTopics']['user_id'] = $me;
 			$fdata['FollowingTopics']['following_topic_id'] = $my_followers;
 
-
-/*
-echo("<PRE>");
-var_dump($fdata);
-echo("</PRE>");
-exit;
-*/
-
                         $this->FollowingTopics->save($fdata);
                 }
         }
@@ -179,17 +160,10 @@ exit;
                 $count = $this->_check_count($me, $my_followers);
 
                 if($count == 0){
-			$fcondition=array('user_id' => $me, 'following_topic_id' => $my_followers, 'deleted' => 0);
+			$fcondition=array('FollowingTopics.user_id' => $me, 'FollowingTopics.following_topic_id' => $my_followers, 'FollowingTopics.deleted' => 0);
 			$fdata = $this->FollowingTopics->find('first', array('conditions'=>$fcondition));
 			$fdata['FollowingTopics']['deleted'] = 1;
-
-
-/*
-echo("<PRE>");
-var_dump($fdata);
-echo("</PRE>");
-exit;
-*/
+			$fdata['FollowingTopics']['modified'] = null;
 
                         $this->FollowingTopics->save($fdata);
                 }
